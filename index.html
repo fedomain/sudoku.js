@@ -2,57 +2,39 @@
 <html>
 <head>
 <title>Sudoku</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
 <script src="js/game.js" type="text/javascript"></script>
-<!-- <script src="js/jquery-3.1.1.min.js" type="text/javascript"></script> -->
 <script>
-function Shape() {
-	this.x = 0;
-	this.y = 0;
+var myGame;
 
-	this.move = function(x,y) {
-		this.x += x;
-		this.y += y;
-		console.log('Shape moved');
-	}
+function startGame() {
+	myGame = new Game(document.getElementById("variation").value, document.getElementById("difficulty").value);
+	myGame.setup();
 }
 
-function Rectangle() {
-	Shape.call(this);
-}
-
-
-Rectangle.prototype = Object.create(Shape.prototype);
-Rectangle.prototype.constructor = Rectangle;
-
-var rect = new Rectangle();
-console.log('Is rect an instance of Rectangle?', rect instanceof Rectangle);
-console.log('Is rect an instance of Shape?', rect instanceof Shape);
-rect.move(1,1);
-
-
-function doSomething() {
-	var myGame = new Game(2, 1);
-
-	myGame.setValue('whatever');
-	document.getElementById('output').innerHTML = myGame.toString();
-	//console.log(navigator.language);
+function showMe() {
+	console.log(myGame.name);
 }
 </script>
-
-<style>
-div#output {
-	border: 1px solid black;
-	width: 400px;
-	height: 200px;
-}
-</style>
 </head>
 
 <body>
 Welcome to the Sudoku JS game.
 <br/><br/><br/>
-<button type="button" onClick="doSomething()">Click Me</button>
-<br/><br/>
-<div id="output"></div>
+<select name="variation" id="variation">
+	<option value="1">Standard</option>
+</select>
+<select name="difficulty" id="difficulty">
+	<option value="1">Very Easy</option>
+	<option value="2">Easy</option>
+	<option value="3">Moderate</option>
+	<option value="4">Hard</option>
+	<option value="5">Very Hard</option>
+</select>
+<button type="button" onClick="startGame()">Start</button>
+<button type="button" onClick="showMe()">Show Me</button>
+<br/><br/><br/>
+<div id="game-board-wrapper"></div>
 </body>
 </html>

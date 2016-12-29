@@ -1,0 +1,9 @@
+table.game-board td {
+	width: 30px;
+	height: 30px;
+	padding: 5px;
+}
+
+table.game-board td.highlighted {
+	background-color: grey;
+}
