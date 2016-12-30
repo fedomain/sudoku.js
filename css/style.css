@@ -1,9 +1,51 @@
+html, body {
+	padding: 0;
+	margin: 0;
+}
+
+div#header {margin: auto;}
+
+table.game-board {
+	margin: auto;
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+
 table.game-board td {
 	width: 30px;
 	height: 30px;
-	padding: 5px;
+	padding: 10px;
+	text-align: center;
 }
 
 table.game-board td.highlighted {
 	background-color: grey;
+}
+
+table.game-board td.row-last {
+	border-bottom: 1px solid black;
+}
+
+table.game-board td.col-last {
+	border-right: 1px solid black;
+}
+
+table.game-board td.normal {
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+table#game-pad {
+	margin: auto;
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+
+table#game-pad td {
+	width: 60px;
+	height: 40px;
+	text-align: center;
+	font: 20px arial, sans-serif;
+	background-color: grey;
+	cursor: pointer;
 }
