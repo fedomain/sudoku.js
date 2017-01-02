@@ -2,8 +2,14 @@ function Game(variation, difficulty, name) {
 	this.name = name || 'Game Default';
 	this.variation = variation;
 	this.difficulty = difficulty;
-	this.gridSize = 12; // Hardcoding this for now
-	this.gameArray = [];
+	this.gridSize = 9; //  Always 9
+	this.cellArray = [];
+	this.subGridArray = [];
+	this.gameArray = [5,2,4,9,6,8,1,7,3,7,6,9,2,1,3,5,4,8,8,3,1,5,7,4,9,6,2,1,9,3,7,2,6,8,5,4,2,5,8,4,9,1,7,3,6,6,4,7,8,3,5,2,9,1,4,1,5,3,8,7,6,2,9,3,8,2,6,5,9,4,1,7,9,7,6,1,4,2,3,8,5];
+
+	this.init = function() {
+		this.setup();
+	};
 
 	this.startTimer = function() {
 		return true;
@@ -19,11 +25,11 @@ function Game(variation, difficulty, name) {
 
 		for (var i=1; i <= this.gridSize; i++) {
 			gameGrid += '<tr>';
-			gameArray[i] = [];
+			cellArray[i] = [];
 
 			for (var j=1; j <= this.gridSize; j++) {
-				gameArray[i][j] = new Cell(i,j, this.gridSize, count);
-				gameGrid += '<td id="' + gameArray[i][j].id + '" class="' + gameArray[i][j].styleClass + '">' + gameArray[i][j].name + ' (' + count + ')' + '</td>';
+				cellArray[i][j] = new Cell(i,j, count, this.gameArray[count]);
+				gameGrid += '<td id="' + cellArray[i][j].id + '" class="' + cellArray[i][j].styleClass + '">' + cellArray[i][j].name + ' (' + count + ')' + '</td>';
 				count++;
 			}
 
@@ -33,5 +39,7 @@ function Game(variation, difficulty, name) {
 		gameGrid += '</table>';
 
 		document.getElementById('game-board-wrapper').innerHTML = gameGrid;
-	}
+	};
+
+	this.init();
 }

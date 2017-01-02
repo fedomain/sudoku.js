@@ -1,7 +1,7 @@
 # Welcome to my test sudoku app 
 
 
-This app is a test and learn project for me to write this game in JS, HTML5 & CSS3. 
+This app is a test and learn project for me to write this game in JS, HTML5 & CSS3. The structure and basis of this game is reengineered from the Android mobile app game Andoku3 from Markus Wiederkehr. All copyright is reserved to Markus Wiederkehr. This game is not for commerical use and I hold no copyright to any of the game play and IPs.
 
 Rules
 
@@ -28,6 +28,7 @@ Phase 1
 - Illegal move indicator
 - Timer
 - Pause (resume game)
+- Write this in plain JS (maybe jQuery)
 
 Phase 2
 
@@ -36,9 +37,5 @@ Phase 2
 - More game difficulties
 - Tutorials
 - Custom puzzles
+- Change the front end to use AngularJS or React
 
-
-#### Some code ####
-```
-npm run this
-```

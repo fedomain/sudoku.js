@@ -1,14 +1,22 @@
 html, body {
-	padding: 0;
+	padding: 10px;
 	margin: 0;
 }
 
+.bold {
+	font-weight: bold;
+}
+
+
 div#header {margin: auto;}
+
+div#game-board-wrapper {float: left;}
+div#game-pad-wrapper {float: left; margin-left: 10px;}
 
 table.game-board {
 	margin: auto;
 	border-collapse: collapse;
-	border: 1px solid black;
+	border: 2px solid black;
 }
 
 table.game-board td {
@@ -19,15 +27,23 @@ table.game-board td {
 }
 
 table.game-board td.highlighted {
-	background-color: grey;
+	background-color: #EEEEEE;
 }
 
 table.game-board td.row-last {
 	border-bottom: 1px solid black;
 }
 
+table.game-board td.hard-top {
+	border-top: 2px solid black;
+}
+
 table.game-board td.col-last {
 	border-right: 1px solid black;
+}
+
+table.game-board td.hard-left {
+	border-left: 2px solid black;
 }
 
 table.game-board td.normal {

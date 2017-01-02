@@ -10,29 +10,33 @@
 <script>
 var myGame;
 
-var gameArray = [];
-gameArray[1] = [];
-gameArray[1][1] = "R1C1";
-gameArray[1][2] = "R1C2";
-gameArray[1][3] = "R1C3";
-gameArray[1][4] = "R1C4";
-gameArray[1][5] = "R1C5";
-gameArray[1][6] = "R1C6";
+var gameArray = [1,2,3,4];
+
 
 function startGame() {
 	myGame = new Game(document.getElementById("variation").value, document.getElementById("difficulty").value);
-	myGame.setup();
+	//myGame.setup();
 }
 
 function showMe() {
-	console.log(gameArray[0]);
+	console.log(inArray(gameArray, 3));
+}
+
+function inArray(array, value) {
+	for (var i=0; i < array.length; i++) {
+		if (parseInt(array[i]) == value) {
+			return i;
+		}
+	}
+
+	return 0;
 }
 </script>
 </head>
 
 <body>
 <div id="header">
-	Welcome to the Sudoku JS game.
+	Welcome to the Sudoku game.
 	<br/><br/><br/>
 	<select name="variation" id="variation">
 		<option value="1">Standard</option>
@@ -48,31 +52,32 @@ function showMe() {
 	<button type="button" onClick="showMe()">Show Me</button>
 	<br/><br/><br/>
 </div>
-<div id="game-board-wrapper"></div>
-<br/><br/><br/>
-<div id="game-pad-wrapper">
-	<table id="game-pad">
-		<tr>
-			<td>1</td>
-			<td>2</td>
-			<td>3</td>
-		</tr>
-		<tr>
-			<td>4</td>
-			<td>5</td>
-			<td>6</td>
-		</tr>
-		<tr>
-			<td>7</td>
-			<td>8</td>
-			<td>9</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td><img src="img/pause.png" width=30></td>
-		</tr>
-	<table>
+<div id="game-wrapper">
+	<div id="game-board-wrapper"></div>
+	<div id="game-pad-wrapper">
+		<table id="game-pad">
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>8</td>
+				<td>9</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><img src="img/pause.png" width=30></td>
+			</tr>
+		<table>
+	</div>
 </div>
 </body>
 </html>
