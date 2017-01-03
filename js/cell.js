@@ -5,10 +5,11 @@ function Cell(row, col, cellCount, cellAnswer) {
 	this.id = 'r' + this.row + 'c' + this.col;
 	this.styleClass = '';
 	this.gridSize = 9; // Always 9
+
 	this.cellCount = cellCount;
 	this.cellAnswer = cellAnswer;
 	this.cellValue = cellAnswer;
-	this.defaultDisplay = false;
+	this.defaultDisplay = true;
 	this.cellCandidates = [];
 
 	this.subgridArray = [];
@@ -56,6 +57,10 @@ function Cell(row, col, cellCount, cellAnswer) {
 
 		if (this.defaultDisplay) {
 			thisClass += ' bold';
+		}
+
+		if (this.defaultDisplay) {
+			thisClass += ' hand';
 		}
 
 		return thisClass;

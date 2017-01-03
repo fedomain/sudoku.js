@@ -23,6 +23,7 @@ table.game-board td {
 	width: 30px;
 	height: 30px;
 	padding: 10px;
+	font: 30px arial, sans-serif;
 	text-align: center;
 }
 
@@ -51,6 +52,10 @@ table.game-board td.normal {
 	border-bottom: 1px solid black;
 }
 
+table.game-board td.hand {
+	cursor: pointer;
+}
+
 table#game-pad {
 	margin: auto;
 	border-collapse: collapse;
@@ -61,7 +66,7 @@ table#game-pad td {
 	width: 60px;
 	height: 40px;
 	text-align: center;
-	font: 20px arial, sans-serif;
+	font: 25px arial, sans-serif;
 	background-color: grey;
 	cursor: pointer;
 }
