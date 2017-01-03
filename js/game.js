@@ -25,11 +25,11 @@ function Game(variation, difficulty, name) {
 
 		for (var i=1; i <= this.gridSize; i++) {
 			gameGrid += '<tr>';
-			cellArray[i] = [];
+			this.cellArray[i] = [];
 
 			for (var j=1; j <= this.gridSize; j++) {
-				cellArray[i][j] = new Cell(i,j, count, this.gameArray[count]);
-				gameGrid += '<td id="' + cellArray[i][j].id + '" class="' + cellArray[i][j].styleClass + '">' + cellArray[i][j].name + ' (' + count + ')' + '</td>';
+				this.cellArray[i][j] = new Cell(i,j, count, this.gameArray[count]);
+				gameGrid += '<td id="' + this.cellArray[i][j].id + '" class="' + this.cellArray[i][j].styleClass + '">' + this.cellArray[i][j].name + ' (' + count + ')' + '</td>';
 				count++;
 			}
 
