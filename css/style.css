@@ -3,11 +3,6 @@ html, body {
 	margin: 0;
 }
 
-.bold {
-	font-weight: bold;
-}
-
-
 div#header {margin: auto;}
 
 div#game-board-wrapper {float: left;}
@@ -25,7 +20,7 @@ table.game-board td {
 	padding: 10px;
 	font: 30px arial, sans-serif;
 	text-align: center;
-}
+}x
 
 table.game-board td.highlighted {
 	background-color: #EEEEEE;
@@ -56,6 +51,18 @@ table.game-board td.hand {
 	cursor: pointer;
 }
 
+table.game-board td.selectedNumber {
+	background-color: yellow;
+}
+
+table.game-board td.bold {
+	font-weight: bold;
+}
+
+table.game-board td.lighter {
+	font-weight: lighter;
+}
+
 table#game-pad {
 	margin: auto;
 	border-collapse: collapse;
@@ -67,6 +74,9 @@ table#game-pad td {
 	height: 40px;
 	text-align: center;
 	font: 25px arial, sans-serif;
-	background-color: grey;
+	background-color: grey;	
+}
+
+table#game-pad button {
 	cursor: pointer;
 }

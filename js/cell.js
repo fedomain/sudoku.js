@@ -1,4 +1,4 @@
-function Cell(row, col, cellCount, cellAnswer) {
+function Cell(row, col, cellCount, cellAnswer, defaultDisplayArray) {
 	this.row = row;
 	this.col = col;
 	this.name = 'R' + this.row + 'C' + this.col;
@@ -8,8 +8,8 @@ function Cell(row, col, cellCount, cellAnswer) {
 
 	this.cellCount = cellCount;
 	this.cellAnswer = cellAnswer;
-	this.cellValue = cellAnswer;
-	this.defaultDisplay = true;
+	this.cellValue = (defaultDisplayArray.indexOf(cellCount) == -1) ? '' : cellAnswer;
+	this.defaultDisplay = (defaultDisplayArray.indexOf(cellCount) == -1) ? false : true;
 	this.cellCandidates = [];
 
 	this.subgridArray = [];
@@ -57,9 +57,7 @@ function Cell(row, col, cellCount, cellAnswer) {
 
 		if (this.defaultDisplay) {
 			thisClass += ' bold';
-		}
-
-		if (this.defaultDisplay) {
+		} else {
 			thisClass += ' hand';
 		}
 
