@@ -68,7 +68,10 @@ function Cell(row, col, cellCount, cellAnswer, defaultDisplayArray, gameGrids) {
 	};
 
 	this.playNumber = function() {
-		return true;
+		var result = {};
+		result.good = true;
+
+		return result;
 	}
 
 	this.init();

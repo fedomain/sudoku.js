@@ -107,7 +107,9 @@ function Game(variation, difficulty, name) {
 
 	this.playCell = function(row, col, cellCount) {
 		if (this.selectedNumber != 0 && this.defaultDisplay.indexOf(cellCount) == -1) {
-			if (this.cellArray[row][col].playNumber()) {
+			var result = this.cellArray[row][col].playNumber();
+
+			if (result.good) {
 				// Set the cell to the selected number
 				document.getElementById('cell_' + cellCount).innerHTML = this.selectedNumber;
 			}
