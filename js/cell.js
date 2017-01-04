@@ -1,4 +1,4 @@
-function Cell(row, col, cellCount, cellAnswer, defaultDisplayArray) {
+function Cell(row, col, cellCount, cellAnswer, defaultDisplayArray, gameGrids) {
 	this.row = row;
 	this.col = col;
 	this.name = 'R' + this.row + 'C' + this.col;
@@ -11,7 +11,7 @@ function Cell(row, col, cellCount, cellAnswer, defaultDisplayArray) {
 	this.cellValue = (defaultDisplayArray.indexOf(cellCount) == -1) ? '' : cellAnswer;
 	this.defaultDisplay = (defaultDisplayArray.indexOf(cellCount) == -1) ? false : true;
 	this.cellCandidates = [];
-
+	this.gameGrids = gameGrids;
 	
 	this.subgridColor = [2,4,6,8];
 	this.hardLeftCell = [4,13,22,31,40,49,58,67,76,7,16,25,34,43,52,61,70,79];
@@ -58,14 +58,18 @@ function Cell(row, col, cellCount, cellAnswer, defaultDisplayArray) {
 	};
 
 	this.getSubGridID = function() {
-		for (var i=0; i < this.subgridArray.length; i++) {
-			if (Array.isArray(this.subgridArray[i]) && this.subgridArray[i].indexOf(this.cellCount) != -1) {
+		for (var i=0; i < this.gameGrids.length; i++) {
+			if (Array.isArray(this.gameGrids[i]) && this.gameGrids[i].indexOf(this.cellCount) != -1) {
 				return i;
 			}
 		}
 
 		return 0;
 	};
+
+	this.playNumber = function() {
+		return true;
+	}
 
 	this.init();
 }

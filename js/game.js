@@ -28,7 +28,7 @@ function Game(variation, difficulty, name) {
 			this.cellArray[i] = [];
 
 			for (var j=1; j <= this.gridSize; j++) {
-				this.cellArray[i][j] = new Cell(i,j, count, this.gameArray[count], this.defaultDisplay);
+				this.cellArray[i][j] = new Cell(i,j, count, this.gameArray[count], this.defaultDisplay, this.gameGrids);
 				//gameGrid += '<td id="' + this.cellArray[i][j].id + '" class="' + this.cellArray[i][j].styleClass + '">' + this.cellArray[i][j].name + ' (' + count + ')' + '</td>';
 				gameGrid += '<td id="cell_' + count + '" class="' + this.cellArray[i][j].styleClass + '" onClick="myGame.playCell(' + i + ',' + j + ',' + count + ')">' + this.cellArray[i][j].cellValue + '</td>';
 				count++;
@@ -107,7 +107,7 @@ function Game(variation, difficulty, name) {
 
 	this.playCell = function(row, col, cellCount) {
 		if (this.selectedNumber != 0 && this.defaultDisplay.indexOf(cellCount) == -1) {
-			if (this.cellArray[row][col].playNumber) {
+			if (this.cellArray[row][col].playNumber()) {
 				// Set the cell to the selected number
 				document.getElementById('cell_' + cellCount).innerHTML = this.selectedNumber;
 			}
