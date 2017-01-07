@@ -1,9 +1,9 @@
-# Welcome to my test sudoku app 
+# Welcome to my Sudoku JS app 
 
 
-This app is a test and learn project for me to write this game in JS, HTML5 & CSS3. The structure and basis of this game is reengineered from the Android mobile app game Andoku3 from Markus Wiederkehr. All copyright is reserved to Markus Wiederkehr. This game is not for commerical use and I hold no copyright to any of the game play and IPs.
+This app is a test and learn project for me to write this game in JS, HTML5 & CSS3. The structure and basis of this game is reengineered from the Android mobile app game Andoku3 from Markus Wiederkehr. This game is not for commerical use and I hold no copyright to any of the game play and IPs.
 
-Rules
+Game rules
 
 - Number 1-9 appearing only once for each row; And
 - Number 1-9 appearing only once for each column; And
