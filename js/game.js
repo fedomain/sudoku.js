@@ -5,6 +5,7 @@ function Game(variation, difficulty, name) {
 	this.gridSize = 9; //  Always 9
 	this.cellArray = [];
 	this.selectedNumber = 0;
+	this.cellCountArray = []; // Reverse lookup of cells using the cell count
 
 	this.init = function() {
 		this.getGameBoard();
@@ -29,6 +30,7 @@ function Game(variation, difficulty, name) {
 
 			for (var j=1; j <= this.gridSize; j++) {
 				this.cellArray[i][j] = new Cell(i,j, count, this.gameBoard);
+				this.cellCountArray[count] = [i,j];
 				//gameGrid += '<td id="' + this.cellArray[i][j].id + '" class="' + this.cellArray[i][j].styleClass + '">' + this.cellArray[i][j].name + ' (' + count + ')' + '</td>';
 				gameGrid += '<td id="cell_' + count + '" class="' + this.cellArray[i][j].styleClass + '" onClick="myGame.playCell(' + i + ',' + j + ',' + count + ')">' + this.cellArray[i][j].cellValue + '</td>';
 				count++;
@@ -100,15 +102,42 @@ function Game(variation, difficulty, name) {
 	};
 
 	this.playCell = function(row, col, cellCount) {
+		var selectedRow = row;
+		var selectedCol = col;
+		var selectedCellCount = cellCount;
+		var result = {};
+		var subGridid = this.cellArray[row][col].getSubGridID();
+
 		if (this.selectedNumber != 0 && this.gameBoard.defaultDisplay.indexOf(cellCount) == -1) {
-			var result = this.cellArray[row][col].playNumber(this.selectedNumber);
+			/*var result = this.cellArray[row][col].playNumber(this.selectedNumber);
 
 			if (result.good) {
 				// Set the cell to the selected number
 				document.getElementById('cell_' + cellCount).innerHTML = this.selectedNumber;
+			}*/
+
+			// Checking the row
+			for (var i=1; i <= cellArray[selectedRow].length; i++) {
+				if (cellArray[selectedRow][i].cellValue == this.selectedNumber) {
+					result.good = false;
+					continue;
+				}
+			}
+
+			// Checking the column
+			for (var i=1; i <= cellArray.length; i++) {
+				if (cellArray[i][selectedCol].cellValue == this.selectedNumber) {
+					result.good = false;
+					continue;
+				}
+			}
+
+			// Checking the sub grid
+			for (var i=0; i< this.gameBoard.gameGrids[subGridid].length; i++) {
+
 			}
 		}
-	}
+	};
 
 	this.init();
 }

@@ -80,29 +80,5 @@ function Cell(row, col, cellCount, gameBoard) {
 		}
 	};
 
-	this.getRowNumbers = function() {
-
-	}
-
-	this.getColNumbers = function() {
-
-	}
-
-	this.getGridNumbers = function() {
-		
-	}
-
-	this.playNumber = function(selectedNumber) {
-		var result = {};
-		result.good = true;
-
-
-
-
-
-
-		return result;
-	};
-
 	this.init();
 }
