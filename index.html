@@ -9,21 +9,20 @@
 <script src="js/cell.js" type="text/javascript"></script>
 <script>
 var myGame;
+var test = [1,2,3];
 
 function startGame() {
 	myGame = new Game(document.getElementById("variation").value, document.getElementById("difficulty").value);
 }
 
 function showMe() {
-	console.log('Show you what');
+	console.log(test[2]);
 }
 </script>
 </head>
 
 <body>
 <div id="header">
-	Welcome to the Sudoku game.
-	<br/><br/><br/>
 	<select name="variation" id="variation">
 		<option value="1">Standard</option>
 	</select>

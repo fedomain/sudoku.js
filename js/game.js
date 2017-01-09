@@ -30,9 +30,9 @@ function Game(variation, difficulty, name) {
 
 			for (var j=1; j <= this.gridSize; j++) {
 				this.cellArray[i][j] = new Cell(i,j, count, this.gameBoard);
-				this.cellCountArray[count] = [i,j];
+				this.cellCountArray[count] = {row: i, col: j};
 				//gameGrid += '<td id="' + this.cellArray[i][j].id + '" class="' + this.cellArray[i][j].styleClass + '">' + this.cellArray[i][j].name + ' (' + count + ')' + '</td>';
-				gameGrid += '<td id="cell_' + count + '" class="' + this.cellArray[i][j].styleClass + '" onClick="myGame.playCell(' + i + ',' + j + ',' + count + ')">' + this.cellArray[i][j].cellValue + '</td>';
+				gameGrid += '<td id="cell_' + count + '" class="' + this.cellArray[i][j].styleClass + '" onClick="myGame.playCell(' + i + ',' + j + ',' + count + ')">' + this.cellArray[i][j].displayNumber() + '</td>';
 				count++;
 			}
 
@@ -102,39 +102,53 @@ function Game(variation, difficulty, name) {
 	};
 
 	this.playCell = function(row, col, cellCount) {
-		var selectedRow = row;
-		var selectedCol = col;
-		var selectedCellCount = cellCount;
-		var result = {};
+		var _row = row;
+		var _col = col;
+		var _cellCount = cellCount;
+
+		var errorArray = [];
 		var subGridid = this.cellArray[row][col].getSubGridID();
 
-		if (this.selectedNumber != 0 && this.gameBoard.defaultDisplay.indexOf(cellCount) == -1) {
+		if (this.selectedNumber != 0 && this.gameBoard.defaultDisplay.indexOf(_cellCount) == -1) {
 			/*var result = this.cellArray[row][col].playNumber(this.selectedNumber);
 
 			if (result.good) {
 				// Set the cell to the selected number
-				document.getElementById('cell_' + cellCount).innerHTML = this.selectedNumber;
+				document.getElementById('cell_' + _cellCount).innerHTML = this.selectedNumber;
 			}*/
 
 			// Checking the row
-			for (var i=1; i <= cellArray[selectedRow].length; i++) {
-				if (cellArray[selectedRow][i].cellValue == this.selectedNumber) {
-					result.good = false;
+			for (var i=1; i < this.cellArray[_row].length; i++) {
+				if (this.cellArray[_row][i].cellValue == this.selectedNumber) {
+					errorArray.push({row: _row, col: i, errmsg: 'This number is already been played in this row'});
 					continue;
 				}
 			}
 
 			// Checking the column
-			for (var i=1; i <= cellArray.length; i++) {
-				if (cellArray[i][selectedCol].cellValue == this.selectedNumber) {
-					result.good = false;
+			for (var i=1; i < this.cellArray.length; i++) {
+				if (this.cellArray[i][_col].cellValue == this.selectedNumber) {
+					errorArray.push({row: i, col: _col, errmsg: 'This number is already been played in this column'});
 					continue;
 				}
 			}
 
 			// Checking the sub grid
-			for (var i=0; i< this.gameBoard.gameGrids[subGridid].length; i++) {
+			for (var i=0; i < this.gameBoard.gameGrids[subGridid].length; i++) {
+				var thisRow = this.cellCountArray[this.gameBoard.gameGrids[subGridid][i]].row;
+				var thisCol = this.cellCountArray[this.gameBoard.gameGrids[subGridid][i]].col;
 
+				if (this.cellArray[thisRow][thisCol].cellValue == this.selectedNumber) {
+					errorArray.push({row: thisRow, col: thisCol, errmsg: 'This number is already been played in this grid'});
+					continue;
+				}
+			}
+
+			if (errorArray.length == 0) {
+				this.cellArray[_row][_col].cellValue = this.selectedNumber;
+				document.getElementById('cell_' + _cellCount).innerHTML = this.selectedNumber;
+			} else {
+				console.log(errorArray);
 			}
 		}
 	};

@@ -12,8 +12,9 @@ function Cell(row, col, cellCount, gameBoard) {
 
 	
 	this.cellAnswer = this.gameBoard.gameArray[cellCount];
-	this.cellValue = (this.gameBoard.defaultDisplay.indexOf(cellCount) == -1) ? '' : this.cellAnswer;
 	this.defaultDisplay = (this.gameBoard.defaultDisplay.indexOf(cellCount) == -1) ? false : true;
+	this.cellValue = (this.defaultDisplay) ? this.cellAnswer : 0;
+	
 	
 	this.subgridColor = [2,4,6,8];
 	this.hardLeftCell = [4,13,22,31,40,49,58,67,76,7,16,25,34,43,52,61,70,79];
@@ -61,7 +62,7 @@ function Cell(row, col, cellCount, gameBoard) {
 	};
 
 	this.getSubGridID = function() {
-		for (var i=0; i < this.gameBoard.gameGrids.length; i++) {
+		for (var i=0; i <= this.gameBoard.gameGrids.length; i++) {
 			if (Array.isArray(this.gameBoard.gameGrids[i]) && this.gameBoard.gameGrids[i].indexOf(this.cellCount) != -1) {
 				return i;
 			}
@@ -79,6 +80,14 @@ function Cell(row, col, cellCount, gameBoard) {
 			}
 		}
 	};
+
+	this.displayNumber = function() {
+		if (this.cellValue != 0 && this.cellValue != '') {
+			return this.cellValue;
+		}
+
+		return '';
+	}
 
 	this.init();
 }
