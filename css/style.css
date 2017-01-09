@@ -73,10 +73,12 @@ table#game-pad td {
 	width: 60px;
 	height: 40px;
 	text-align: center;
-	font: 25px arial, sans-serif;
 	background-color: grey;	
 }
 
 table#game-pad button {
+	width: 60px;
+	height: 40px;
+	font: 25px arial, sans-serif;
 	cursor: pointer;
 }

@@ -71,16 +71,6 @@ function Cell(row, col, cellCount, gameBoard) {
 		return 0;
 	};
 
-	this.findRowColNumber = function(cell) {
-		for (var i=1; i <= this.gameBoard.gameRowCols.length; i++) {
-			for (var j=i; j <= this.gameBoard.gameRowCols[i].length; i++) {
-				if (this.gameBoard.gameRowCols[i][j] == cell) {
-					return i;
-				}
-			}
-		}
-	};
-
 	this.displayNumber = function() {
 		if (this.cellValue != 0 && this.cellValue != '') {
 			return this.cellValue;

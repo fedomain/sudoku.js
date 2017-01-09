@@ -14,11 +14,20 @@ Game setup
 - game variation (default: standard)
 - game difficulty (default: very easy)
 
+Application Components
+
+- Setting up the game
+	- Will need to store all the possible game boards in a permanent storage like database or file.
+	- Along with the basic number of number display depending on the difficulty level. Might also require some other rules.
+- Playing the game
+	- A JS object for the game, this is a singleton.
+	- A JS object for each cell containing all the information regarding the cell. Like current value, the answer, default display flag, etc.
+
 Technology Used
 
-- jQuery
 - Javascript objects
-- Plain HTML
+- Plain HTML5
+- CSS3
 
 Phase 1
 

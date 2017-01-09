@@ -2,6 +2,7 @@ function Game(variation, difficulty, name) {
 	this.name = name || 'Game Default';
 	this.variation = variation;
 	this.difficulty = difficulty;
+
 	this.gridSize = 9; //  Always 9
 	this.cellArray = [];
 	this.selectedNumber = 0;
@@ -31,7 +32,7 @@ function Game(variation, difficulty, name) {
 			for (var j=1; j <= this.gridSize; j++) {
 				this.cellArray[i][j] = new Cell(i,j, count, this.gameBoard);
 				this.cellCountArray[count] = {row: i, col: j};
-				//gameGrid += '<td id="' + this.cellArray[i][j].id + '" class="' + this.cellArray[i][j].styleClass + '">' + this.cellArray[i][j].name + ' (' + count + ')' + '</td>';
+
 				gameGrid += '<td id="cell_' + count + '" class="' + this.cellArray[i][j].styleClass + '" onClick="myGame.playCell(' + i + ',' + j + ',' + count + ')">' + this.cellArray[i][j].displayNumber() + '</td>';
 				count++;
 			}
@@ -62,19 +63,6 @@ function Game(variation, difficulty, name) {
 		temp[9] = [61,62,63,70,71,72,79,80,81];
 
 		this.gameBoard.gameGrids = temp;
-
-		var temp = [];
-		temp[1] = [1,2,3,4,5,6,7,8,9];
-		temp[2] = [10,11,12,13,14,15,16,17,18];
-		temp[3] = [19,20,21,22,23,24,25,26,27];
-		temp[4] = [28,29,30,31,32,33,34,35,36];
-		temp[5] = [37,38,39,40,41,42,43,44,45];
-		temp[6] = [46,47,48,49,50,51,52,53,54];
-		temp[7] = [55,56,57,58,59,60,61,62,63];
-		temp[8] = [64,65,66,67,68,69,70,71,72];
-		temp[9] = [73,74,75,76,77,78,79,80,81];
-
-		this.gameBoard.gameRowCols = temp;
 	};
 
 	this.playNumber = function(number) {
@@ -110,12 +98,6 @@ function Game(variation, difficulty, name) {
 		var subGridid = this.cellArray[row][col].getSubGridID();
 
 		if (this.selectedNumber != 0 && this.gameBoard.defaultDisplay.indexOf(_cellCount) == -1) {
-			/*var result = this.cellArray[row][col].playNumber(this.selectedNumber);
-
-			if (result.good) {
-				// Set the cell to the selected number
-				document.getElementById('cell_' + _cellCount).innerHTML = this.selectedNumber;
-			}*/
 
 			// Checking the row
 			for (var i=1; i < this.cellArray[_row].length; i++) {
@@ -151,7 +133,13 @@ function Game(variation, difficulty, name) {
 				console.log(errorArray);
 			}
 		}
+
+		this.checkGame();
 	};
+
+	this.checkGame = function() {
+		return true;
+	}
 
 	this.init();
 }
