@@ -97,12 +97,18 @@ function Game(variation, difficulty, name) {
 		var errorArray = [];
 		var subGridid = this.cellArray[row][col].getSubGridID();
 
-		if (this.selectedNumber != 0 && this.gameBoard.defaultDisplay.indexOf(_cellCount) == -1) {
-
+		if (this.cellArray[_row][_col].cellValue != 0) {
+			if (this.cellArray[_row][_col].cellValue == this.selectedNumber) {
+				this.cellArray[_row][_col].cellValue = 0;
+				document.getElementById('cell_' + _cellCount).innerHTML = '';
+				document.getElementById('cell_' + _cellCount).classList.remove('errorCell');
+				document.getElementById('cell_' + _cellCount).classList.remove('selectedNumber');
+			}
+		} else {
 			// Checking the row
 			for (var i=1; i < this.cellArray[_row].length; i++) {
 				if (this.cellArray[_row][i].cellValue == this.selectedNumber) {
-					errorArray.push({row: _row, col: i, errmsg: 'This number is already been played in this row'});
+					errorArray.push({row: _row, col: i, errmsg: 'This number is already been played in the same row'});
 					continue;
 				}
 			}
@@ -110,7 +116,7 @@ function Game(variation, difficulty, name) {
 			// Checking the column
 			for (var i=1; i < this.cellArray.length; i++) {
 				if (this.cellArray[i][_col].cellValue == this.selectedNumber) {
-					errorArray.push({row: i, col: _col, errmsg: 'This number is already been played in this column'});
+					errorArray.push({row: i, col: _col, errmsg: 'This number is already been played in the same column'});
 					continue;
 				}
 			}
@@ -121,19 +127,34 @@ function Game(variation, difficulty, name) {
 				var thisCol = this.cellCountArray[this.gameBoard.gameGrids[subGridid][i]].col;
 
 				if (this.cellArray[thisRow][thisCol].cellValue == this.selectedNumber) {
-					errorArray.push({row: thisRow, col: thisCol, errmsg: 'This number is already been played in this grid'});
+					errorArray.push({row: thisRow, col: thisCol, errmsg: 'This number is already been played in the same sub-grid'});
 					continue;
 				}
 			}
 
-			if (errorArray.length == 0) {
-				this.cellArray[_row][_col].cellValue = this.selectedNumber;
-				document.getElementById('cell_' + _cellCount).innerHTML = this.selectedNumber;
-			} else {
-				console.log(errorArray);
+			// Still set the cell to the selected number regardless of violations
+			this.cellArray[_row][_col].cellValue = this.selectedNumber;
+			document.getElementById('cell_' + _cellCount).innerHTML = this.selectedNumber;
+
+			// If there are rule violations then print them out
+			if (errorArray.length != 0) {
+				var content = '<ul>';
+
+				for (var i=0; i < errorArray.length; i++) {
+					content += '<li>' + errorArray[i].errmsg + '</li>';
+				}
+
+				content += '</ul';
+
+				document.getElementById('game-error-wrapper').innerHTML = '';
+				document.getElementById('game-error-wrapper').innerHTML = content;
+				document.getElementById('cell_' + _cellCount).classList.add('errorCell');
+
+				//console.log(errorArray);
 			}
 		}
 
+		// Finally check the game board
 		this.checkGame();
 	};
 

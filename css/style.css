@@ -7,6 +7,7 @@ div#header {margin: auto;}
 
 div#game-board-wrapper {float: left;}
 div#game-pad-wrapper {float: left; margin-left: 10px;}
+div#game-error-wrapper {float: left; margin-left: 10px;}
 
 table.game-board {
 	margin: auto;
@@ -55,6 +56,10 @@ table.game-board td.selectedNumber {
 	background-color: yellow;
 }
 
+table.game-board td.errorCell {
+	background-color: #F00;
+}
+
 table.game-board td.bold {
 	font-weight: bold;
 }
@@ -64,7 +69,6 @@ table.game-board td.lighter {
 }
 
 table#game-pad {
-	margin: auto;
 	border-collapse: collapse;
 	border: 1px solid black;
 }
@@ -81,4 +85,8 @@ table#game-pad button {
 	height: 40px;
 	font: 25px arial, sans-serif;
 	cursor: pointer;
+}
+
+div#game-error-wrapper ul {
+	list-style: disc;
 }
