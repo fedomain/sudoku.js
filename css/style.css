@@ -10,7 +10,7 @@ div#game-pad-wrapper {float: left; margin-left: 10px;}
 div#game-error-wrapper {float: left; margin-left: 10px;}
 div#game-header-wrapper {
 	float: left;
-	font: 25px arial, sans-serif;
+	font: 20px arial, sans-serif;
 }
 
 table.game-board {

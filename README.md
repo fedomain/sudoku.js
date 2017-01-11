@@ -48,3 +48,8 @@ Phase 2
 - Custom puzzles
 - Change the front end to use AngularJS or React
 
+Known bugs
+
+- Clicking on a cell while no number is selected will display a 0
+- Clicking on a permanent display number will make it disappear
+

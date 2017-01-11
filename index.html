@@ -15,16 +15,9 @@ function startGame() {
 }
 
 function showMe() {
-	console.log(test[2]);
+	//console.log(test[2]);
+	myGame.fedtest();
 }
-
-function digitPadding(digit) {
-	if (digit < 10) {
-		return '0' + digit.toString();
-	} else {
-		return digit.toString();
-	}
-};
 </script>
 </head>
 
@@ -46,8 +39,8 @@ function digitPadding(digit) {
 </div>
 <div id="game-wrapper">
 	<div id="game-header-wrapper">
-		<span id="header"></span>
-		<span id="timer"></span>
+		<span id="game-header"></span>
+		<span id="game-timer"></span>
 	</div>
 	<div id="game-board-wrapper"></div>
 	<div id="game-pad-wrapper">
@@ -76,5 +69,6 @@ function digitPadding(digit) {
 	</div>
 	<div id="game-error-wrapper"></div>
 </div>
+<div id="fedtest"></div>
 </body>
 </html>
