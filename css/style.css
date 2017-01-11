@@ -8,6 +8,9 @@ div#header {margin: auto;}
 div#game-board-wrapper {float: left;}
 div#game-pad-wrapper {float: left; margin-left: 10px;}
 div#game-error-wrapper {float: left; margin-left: 10px;}
+div#timer-wrapper {
+	font: 25px arial, sans-serif;
+}
 
 table.game-board {
 	margin: auto;

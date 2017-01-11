@@ -18,6 +18,37 @@ function startGame() {
 function showMe() {
 	console.log(test[2]);
 }
+
+var timer = [0,0,0];
+var myVar = setInterval(myTimer, 1000);
+
+function myTimer() {
+	timer[0]++;
+
+	if (timer[0] == 60) {
+		timer[0] = 0;
+		timer[1]++;
+	}
+
+	if (timer[1] == 60) {
+		timer[1] = 0;
+		timer[2]++;
+	}
+
+	if (timer[2] == 0) {
+		document.getElementById("demo").innerHTML = digitPadding(timer[1]) + ':' + digitPadding(timer[0]);
+	} else {
+		document.getElementById("demo").innerHTML = digitPadding(timer[2]) + ':' + digitPadding(timer[1]) + ':' + digitPadding(timer[0]);
+	}
+}
+
+function digitPadding(digit) {
+	if (digit < 10) {
+		return '0' + digit.toString();
+	} else {
+		return digit.toString();
+	}
+}
 </script>
 </head>
 
@@ -36,6 +67,7 @@ function showMe() {
 	<button type="button" onClick="startGame()">Start</button>
 	<button type="button" onClick="showMe()">Show Me</button>
 	<br/><br/><br/>
+	<div id="demo"></div>
 </div>
 <div id="game-wrapper">
 	<div id="game-board-wrapper"></div>

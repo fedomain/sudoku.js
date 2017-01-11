@@ -8,17 +8,24 @@ function Game(variation, difficulty, name) {
 	this.selectedNumber = 0;
 	this.cellCountArray = []; // Reverse lookup of cells using the cell count
 
+	this.timer = new Date();
+
 	this.init = function() {
 		this.getGameBoard();
 		this.setup();
+		this.startTimer();
 	};
 
 	this.startTimer = function() {
-		return true;
+		var myTimer = setInterval(getTimer, 1000);
 	};
 
 	this.stopTimer = function() {
 		return true;
+	};
+
+	this.getTimer = function() {
+		document.getElementById("timer-wrapper").innerHTML = d.toLocaleTimeString();
 	};
 
 	this.setup = function() {
