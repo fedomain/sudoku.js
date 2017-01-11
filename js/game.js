@@ -1,5 +1,5 @@
 function Game(variation, difficulty, name) {
-	this.name = name || 'Game Default';
+	this.name = name || 'Game 1';
 	this.variation = variation;
 	this.difficulty = difficulty;
 
@@ -8,7 +8,7 @@ function Game(variation, difficulty, name) {
 	this.selectedNumber = 0;
 	this.cellCountArray = []; // Reverse lookup of cells using the cell count
 
-	this.timer = new Date();
+	this.timer = [0,0,0];
 
 	this.init = function() {
 		this.getGameBoard();
@@ -17,7 +17,7 @@ function Game(variation, difficulty, name) {
 	};
 
 	this.startTimer = function() {
-		var myTimer = setInterval(getTimer, 1000);
+		var myTimer = setInterval(this.getTimer, 1000);
 	};
 
 	this.stopTimer = function() {
@@ -25,7 +25,31 @@ function Game(variation, difficulty, name) {
 	};
 
 	this.getTimer = function() {
-		document.getElementById("timer-wrapper").innerHTML = d.toLocaleTimeString();
+		this.timer[0]++;
+
+		if (this.timer[0] == 10) {
+			this.timer[0] = 0;
+			this.timer[1]++;
+		}
+
+		if (this.timer[1] == 10) {
+			this.timer[1] = 0;
+			this.timer[2]++;
+		}
+
+		if (this.timer[2] == 0) {
+			document.getElementById("timer").innerHTML = this.digitPadding(this.timer[1]) + ':' + this.digitPadding(this.timer[0]);
+		} else {
+			document.getElementById("timer").innerHTML = this.digitPadding(this.timer[2]) + ':' + this.digitPadding(this.timer[1]) + ':' + this.digitPadding(this.timer[0]);
+		}
+	};
+
+	this.digitPadding2 = function(digit) {
+		if (digit < 10) {
+			return '0' + digit.toString();
+		} else {
+			return digit.toString();
+		}
 	};
 
 	this.setup = function() {
@@ -49,6 +73,7 @@ function Game(variation, difficulty, name) {
 
 		gameGrid += '</table>';
 
+		document.getElementById('header').innerHTML = this.name;
 		document.getElementById('game-board-wrapper').innerHTML = gameGrid;
 	};
 
