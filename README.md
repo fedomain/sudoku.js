@@ -1,4 +1,4 @@
-# Welcome to my Sudoku JS app 
+# Welcome to my Sudoku JS app
 
 
 This app is a test and learn project for me to write this game in JS, HTML5 & CSS3. The structure and basis of this game is reengineered from the Android mobile app game Andoku3 from Markus Wiederkehr. This game is not for commerical use and I hold no copyright to any of the game play and IPs.
@@ -50,6 +50,5 @@ Phase 2
 
 Known bugs
 
-- Clicking on a cell while no number is selected will display a 0
-- Clicking on a permanent display number will make it disappear
-
+- Clicking on a cell while no number is selected will display a 0 [Fixed]
+- Clicking on a permanent display number will make it disappear [Fixed]
