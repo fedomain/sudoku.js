@@ -28,6 +28,7 @@ Technology Used
 - Javascript objects
 - Plain HTML5
 - CSS3
+- This is just some dummy changes to test out git tagging
 
 Phase 1
 
