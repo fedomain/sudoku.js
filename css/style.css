@@ -1,17 +1,17 @@
 html, body {
 	padding: 10px;
 	margin: 0;
+	font: 20px arial, sans-serif;
 }
 
 div#header {margin: auto;}
+div#game-wrapper {width: 70%;}
 
-div#game-board-wrapper {float: left;}
-div#game-pad-wrapper {float: left; margin-left: 10px;}
-div#game-error-wrapper {float: left; margin-left: 10px;}
-div#game-header-wrapper {
-	float: left;
-	font: 20px arial, sans-serif;
-}
+div#game-header-wrapper {width: 100%; padding: 5px;}
+div#game-board-wrapper {float: left; width: 50%;}
+div#game-pad-wrapper {float: right; width: 50%; height: 170px;}
+div#game-error-wrapper {float: left; width: 100%;}
+
 
 table.game-board {
 	margin: auto;
@@ -23,7 +23,7 @@ table.game-board td {
 	width: 30px;
 	height: 30px;
 	padding: 10px;
-	font: 30px arial, sans-serif;
+	font-size: 30px;
 	text-align: center;
 }x
 
@@ -81,16 +81,21 @@ table#game-pad td {
 	width: 60px;
 	height: 40px;
 	text-align: center;
-	background-color: grey;	
+	background-color: grey;
 }
 
 table#game-pad button {
 	width: 60px;
 	height: 40px;
-	font: 25px arial, sans-serif;
+	font-size: 25px;
 	cursor: pointer;
 }
 
 div#game-error-wrapper ul {
-	list-style: disc;
+	list-style: none;
+	font-size: 15px;
 }
+
+/* generic classes */
+.hide {display: none;}
+.show {display: block;}

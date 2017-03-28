@@ -1,25 +1,21 @@
-function Cell(row, col, cellCount, gameBoard) {
+function Cell(row, col, cellid, gameBoard) {
 	this.row = row;
 	this.col = col;
-	this.cellCount = cellCount;
+	this.cellid = cellid;
 	this.gameBoard = gameBoard;
-
 
 	this.name = 'R' + this.row + 'C' + this.col;
 	this.id = 'r' + this.row + 'c' + this.col;
 	this.styleClass = '';
 	this.gridSize = 9; // Always 9
 
-	
-	this.cellAnswer = this.gameBoard.gameArray[cellCount];
-	this.defaultDisplay = (this.gameBoard.defaultDisplay.indexOf(cellCount) == -1) ? false : true;
+	this.cellAnswer = this.gameBoard.gameArray[cellid];
+	this.defaultDisplay = (this.gameBoard.defaultDisplay.indexOf(cellid) == -1) ? false : true;
 	this.cellValue = (this.defaultDisplay) ? this.cellAnswer : 0;
-	
-	
+
 	this.subgridColor = [2,4,6,8];
 	this.hardLeftCell = [4,13,22,31,40,49,58,67,76,7,16,25,34,43,52,61,70,79];
 	this.hardTopCell = [28,29,30,31,32,33,34,35,36,55,56,57,58,59,60,61,62,63];
-
 
 	this.init = function() {
 		this.styleClass = this.getStyleClass();
@@ -42,11 +38,11 @@ function Cell(row, col, cellCount, gameBoard) {
 			thisClass += ' highlighted';
 		}
 
-		if (this.hardLeftCell.indexOf(this.cellCount) != -1) {
+		if (this.hardLeftCell.indexOf(this.cellid) != -1) {
 			thisClass += ' hard-left';
 		}
 
-		if (this.hardTopCell.indexOf(this.cellCount) != -1) {
+		if (this.hardTopCell.indexOf(this.cellid) != -1) {
 			thisClass += ' hard-top';
 		}
 
@@ -63,7 +59,7 @@ function Cell(row, col, cellCount, gameBoard) {
 
 	this.getSubGridID = function() {
 		for (var i=0; i <= this.gameBoard.gameGrids.length; i++) {
-			if (Array.isArray(this.gameBoard.gameGrids[i]) && this.gameBoard.gameGrids[i].indexOf(this.cellCount) != -1) {
+			if (Array.isArray(this.gameBoard.gameGrids[i]) && this.gameBoard.gameGrids[i].indexOf(this.cellid) != -1) {
 				return i;
 			}
 		}

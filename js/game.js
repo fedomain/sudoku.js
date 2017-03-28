@@ -8,6 +8,8 @@ function Game(variation, difficulty, name) {
 	this.selectedNumber = 0;
 	this.cellCountArray = []; // Reverse lookup of cells using the cell count
 
+	this.errorArray = [];
+
 	this.timer = [0,0,0];
 
 	this.init = function() {
@@ -73,9 +75,9 @@ function Game(variation, difficulty, name) {
 				this.cellCountArray[count] = {row: i, col: j};
 
 				if (this.cellArray[i][j].defaultDisplay) {
-					gameGrid += '<td id="cell_' + count + '" class="' + this.cellArray[i][j].styleClass + '">' + this.cellArray[i][j].displayNumber() + '</td>';
+					gameGrid += '<td id="' + count + '" class="' + this.cellArray[i][j].styleClass + '">' + this.cellArray[i][j].displayNumber() + '</td>';
 				} else {
-					gameGrid += '<td id="cell_' + count + '" class="' + this.cellArray[i][j].styleClass + '" onClick="myGame.playCell(' + i + ',' + j + ',' + count + ')">' + this.cellArray[i][j].displayNumber() + '</td>';
+					gameGrid += '<td id="' + count + '" class="' + this.cellArray[i][j].styleClass + '" onClick="myGame.playCell(' + i + ',' + j + ',' + count + ')">' + this.cellArray[i][j].displayNumber() + '</td>';
 				}
 
 				count++;
@@ -88,6 +90,9 @@ function Game(variation, difficulty, name) {
 
 		document.getElementById('game-header').innerHTML = this.name;
 		document.getElementById('game-board-wrapper').innerHTML = gameGrid;
+
+		document.getElementById('game-pad-wrapper').classList.remove('hide');
+		document.getElementById('game-pad-wrapper').classList.add('show');
 	};
 
 	this.getGameBoard = function() {
@@ -112,112 +117,166 @@ function Game(variation, difficulty, name) {
 
 	this.playNumber = function(number) {
 		this.clearNumbers();
-		
+
+		for (var i=0; i < this.errorArray.length; i++) {
+			if (this.errorArray[i].cellid == 0) {
+				this.errorArray.splice(i, 1);
+			}
+		}
+
 		for (var i=1; i <= this.gridSize; i++) {
 			for (var j=1; j <= this.gridSize; j++) {
 				if (this.cellArray[i][j].cellValue == number) {
-					document.getElementById('cell_' + this.cellArray[i][j].cellCount).classList.add('selectedNumber');
+					document.getElementById(this.cellArray[i][j].cellid).classList.add('selectedNumber');
 				}
 			}
 		}
 
 		this.selectedNumber = number;
+		this.showError();
 	};
 
 	this.clearNumbers = function() {
 		for (var i=1; i <= this.gridSize; i++) {
 			for (var j=1; j <= this.gridSize; j++) {
-				document.getElementById('cell_' + this.cellArray[i][j].cellCount).classList.remove('selectedNumber');
+				document.getElementById(this.cellArray[i][j].cellid).classList.remove('selectedNumber');
 			}
 		}
 
 		this.selectedNumber = 0;
 	};
 
-	this.playCell = function(row, col, cellCount) {
+	this.playCell = function(row, col, cellid) {
 		var _row = row;
 		var _col = col;
-		var _cellCount = cellCount;
+		var _cellid = cellid;
 
-		var errorArray = [];
-		var subGridid = this.cellArray[row][col].getSubGridID();
+		var subGridid = this.cellArray[_row][_col].getSubGridID();
 
-		// If no number is selected
+		// if no number is selected
 		if (this.selectedNumber == 0) {
-			errorArray.push({row: 0, col: 0, cellCount: 0, errmsg: 'Please select a number first'});
-
-		} else if (this.cellArray[_row][_col].cellValue == this.selectedNumber) {
-			this.clearCell(_row, _col, _cellCount);
-			
-		} else {
-			// Checking the row
-			for (var i=1; i < this.cellArray[_row].length; i++) {
-				if (this.cellArray[_row][i].cellValue == this.selectedNumber) {
-					errorArray.push({row: _row, col: i, cellCount: this.cellArray[_row][j].cellCount, errmsg: 'This number is already been played in the same row'});
-					continue;
-				}
-			}
-
-			// Checking the column
-			for (var i=1; i < this.cellArray.length; i++) {
-				if (this.cellArray[i][_col].cellValue == this.selectedNumber) {
-					errorArray.push({row: i, col: _col, cellCount: this.cellArray[i][_col].cellCount, errmsg: 'This number is already been played in the same column'});
-					continue;
-				}
-			}
-
-			// Checking the sub grid
-			for (var i=0; i < this.gameBoard.gameGrids[subGridid].length; i++) {
-				var thisRow = this.cellCountArray[this.gameBoard.gameGrids[subGridid][i]].row;
-				var thisCol = this.cellCountArray[this.gameBoard.gameGrids[subGridid][i]].col;
-
-				if (this.cellArray[thisRow][thisCol].cellValue == this.selectedNumber) {
-					errorArray.push({row: thisRow, col: thisCol, cellCount: this.cellArray[thisRow][thisCol].cellCount, errmsg: 'This number is already been played in the same sub-grid'});
-					continue;
-				}
-			}
-
-			// Still set the cell to the selected number regardless of violations
-			this.showNumber(_row, _col, _cellCount);
+			this.errorArray.push({row: 0, col: 0, cellid: 0, errmsg: 'Please select a number to play.'});
+			this.showError();
+			return false;
 		}
 
+		// if the cell is already occupied
+		if (this.cellArray[_row][_col].cellValue != 0) {
+			// if the cell already has the selected number then remove it
+			if (this.cellArray[_row][_col].cellValue == this.selectedNumber) {
+				this.clearCell(_row, _col, _cellid);
+			}
+			this.showError();
+			return false;
+		}
+
+		// checking the row
+		for (var i=1; i < this.cellArray[_row].length; i++) {
+			if (this.cellArray[_row][i].cellValue == this.selectedNumber) {
+				this.errorArray.push({
+					row: _row,
+					col: i,
+					cellid: this.cellArray[_row][i].cellid,
+					error_row: _row,
+					error_col: _col,
+					error_cellid: _cellid,
+					errmsg: 'This number has already been played in the same row.'
+				});
+				continue;
+			}
+		}
+
+		// checking the column
+		for (var i=1; i < this.cellArray.length; i++) {
+			if (this.cellArray[i][_col].cellValue == this.selectedNumber) {
+				this.errorArray.push({
+					row: i,
+					col: _col,
+					cellid: this.cellArray[i][_col].cellid,
+					error_row: _row,
+					error_col: _col,
+					error_cellid: _cellid,
+					errmsg: 'This number has already been played in the same column.'
+				});
+				continue;
+			}
+		}
+
+		// checking the sub grid
+		for (var i=0; i < this.gameBoard.gameGrids[subGridid].length; i++) {
+			var thisRow = this.cellCountArray[this.gameBoard.gameGrids[subGridid][i]].row;
+			var thisCol = this.cellCountArray[this.gameBoard.gameGrids[subGridid][i]].col;
+
+			if (this.cellArray[thisRow][thisCol].cellValue == this.selectedNumber) {
+				this.errorArray.push({
+					row: thisRow,
+					col: thisCol,
+					cellid: this.cellArray[thisRow][thisCol].cellid,
+					error_row: _row,
+					error_col: _col,
+					error_cellid: _cellid,
+					errmsg: 'This number has already been played in the same sub-grid.'
+				});
+				continue;
+			}
+		}
+
+		// Still set the cell to the selected number regardless of violations
+		this.showNumber(_row, _col, _cellid);
+
 		// Show errors if any
-		this.showError(errorArray);
+		this.showError();
 
 		// Finally check the game board
 		this.checkGame();
 	};
 
-	this.showError = function(errorArray) {
-		if (errorArray.length != 0) {
+	this.showError = function() {
+		document.getElementById('game-error-wrapper').innerHTML = '';
+
+		if (this.errorArray.length != 0) {
 			var content = '<ul>';
 
-			for (var i=0; i < errorArray.length; i++) {
-				content += '<li>' + errorArray[i].errmsg + '</li>';
+			for (var i=0; i < this.errorArray.length; i++) {
+				content += '<li>' + this.errorArray[i].errmsg + '</li>';
 
-				if (errorArray[i].cellCount != 0) {
-					document.getElementById('cell_' + errorArray[i].cellCount).classList.add('errorCell');	
+				if (this.errorArray[i].cellid != 0) {
+					document.getElementById(this.errorArray[i].cellid).classList.add('errorCell');
 				}
 			}
 
 			content += '</ul>';
 
-			document.getElementById('game-error-wrapper').innerHTML = '';
 			document.getElementById('game-error-wrapper').innerHTML = content;
 		}
 	}
 
-	this.showNumber = function(row, col, cellCount) {
+	this.showNumber = function(row, col, cellid) {
 		this.cellArray[row][col].cellValue = this.selectedNumber;
-		document.getElementById('cell_' + cellCount).innerHTML = this.selectedNumber;
+		document.getElementById(cellid).innerHTML = this.selectedNumber;
+		document.getElementById(cellid).classList.add('selectedNumber');
 	}
 
-	this.clearCell = function(row, col, cellCount) {
+	this.clearCell = function(row, col, cellid) {
 		this.cellArray[row][col].cellValue = 0;
 
-		document.getElementById('cell_' + cellCount).innerHTML = '';
-		document.getElementById('cell_' + cellCount).classList.remove('errorCell');
-		document.getElementById('cell_' + cellCount).classList.remove('selectedNumber');
+		document.getElementById(cellid).innerHTML = '';
+		//document.getElementById(cellid).classList.remove('errorCell');
+		document.getElementById(cellid).classList.remove('selectedNumber');
+
+		// clear related errors if any
+		this.clearErrors(row, col, cellid);
+		this.showError();
+	}
+
+	this.clearErrors = function(row, col, cellid) {
+		for (var i=this.errorArray.length-1; i>=0; i--) {
+			if (this.errorArray[i].error_cellid == cellid) {
+				document.getElementById(this.errorArray[i].cellid).classList.remove('errorCell');
+				this.errorArray.splice(i, 1);
+			}
+		}
+		console.log(this.errorArray.length);
 	}
 
 	this.checkGame = function() {
