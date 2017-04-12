@@ -1,7 +1,5 @@
-function Game(variation, difficulty, name) {
-	this.name = name || 'Game 1';
-	this.variation = variation;
-	this.difficulty = difficulty;
+function Game() {
+	this.gameBoard = {};
 
 	this.gridSize = 9; //  Always 9
 	this.cellArray = [];
@@ -13,8 +11,8 @@ function Game(variation, difficulty, name) {
 	this.timer = [0,0,0];
 
 	this.init = function() {
-		this.getGameBoard();
-		this.setup();
+		this.getGameBoard(this.variation, this.difficulty);
+		this.gridSetup();
 		//this.startTimer();
 	};
 
@@ -62,14 +60,16 @@ function Game(variation, difficulty, name) {
 		document.getElementById("fedtest").innerHTML = this.digitPadding(thisNum);
 	}
 
-	this.setup = function() {
+	this.gridSetup = function() {
 		var count = 1;
 		var gameGrid = '<table class="game-board">';
 
+		// Loop through the rows
 		for (var i=1; i <= this.gridSize; i++) {
 			gameGrid += '<tr>';
 			this.cellArray[i] = [];
 
+			// Set up the cells
 			for (var j=1; j <= this.gridSize; j++) {
 				this.cellArray[i][j] = new Cell(i,j, count, this.gameBoard);
 				this.cellCountArray[count] = {row: i, col: j};
@@ -95,9 +95,13 @@ function Game(variation, difficulty, name) {
 		document.getElementById('game-pad-wrapper').classList.add('show');
 	};
 
-	this.getGameBoard = function() {
-		this.gameBoard = {};
+	this.getGameBoard = function(variation, difficulty, name) {
+		this.name = name || 'Game 1';
+		this.variation = variation;
+		this.difficulty = difficulty;
 
+		// An array consisting of the answers to the current game board
+		// Eventually this will come out of a database
 		this.gameBoard.gameArray = [0,9,6,1,7,5,8,4,2,3,8,3,5,2,4,6,7,1,9,4,7,2,9,3,1,8,5,6,7,8,3,1,6,4,5,9,2,5,2,4,3,8,9,6,7,1,6,1,9,5,2,7,3,4,8,1,4,6,8,7,2,9,3,5,2,5,7,6,9,3,1,8,4,3,9,8,4,1,5,2,6,7];
 		this.gameBoard.defaultDisplay = [1,5,8,11,12,14,17,18,19,20,23,27,28,33,39,43,49,54,55,59,62,63,64,65,68,70,71,74,77,81];
 
