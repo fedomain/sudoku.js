@@ -50,10 +50,7 @@ Phase 2
 
 Known bugs
 
-<<<<<<< Updated upstream
-- Selecting another number from the pad should not remove any previous errors
-- Key pad shouldn't be selectable when there is no game started
-- Should always be able to fix up illegal moves by deselecting the cell regardless of which number you're currently on
+- Selecting another number from the pad should not remove any previous errors [fixed]
 - Red background should be applied to both cells that are part of the illegal move
 - Error message that asks the user to select a number first should be removed automatically when they select a number from the pad [Fixed]
 - When a user un-select an illegal number from the game board, the error messages and illegal indicator should also be removed [Fixed]
