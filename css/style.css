@@ -25,7 +25,7 @@ table.game-board td {
 	padding: 10px;
 	font: 30px arial, sans-serif;
 	text-align: center;
-}x
+}
 
 table.game-board td.highlighted {
 	background-color: #EEEEEE;
