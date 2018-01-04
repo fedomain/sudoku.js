@@ -93,6 +93,8 @@ function Game() {
 
 		document.getElementById('game-pad-wrapper').classList.remove('hide');
 		document.getElementById('game-pad-wrapper').classList.add('show');
+
+		document.getElementById('welcome-div').classList.add('hide');
 	};
 
 	this.getGameBoard = function(variation, difficulty, name) {
