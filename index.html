@@ -1,75 +1,118 @@
 <!doctype html>
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>Sudoku</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
-
-<!-- <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script> -->
-<script type="text/javascript" src="js/game.js"></script>
-<script type="text/javascript" src="js/cell.js"></script>
-<script>
-var myGame;
-
-function startGame() {
-	myGame = new Game(document.getElementById("variation").value, document.getElementById("difficulty").value);
-}
-
-function showMe() {
-	//console.log(test[2]);
-	myGame.fedtest();
-}
-</script>
 </head>
 
 <body>
-<div id="header">
-	<select name="variation" id="variation">
-		<option value="1">Standard</option>
-	</select>
-	<select name="difficulty" id="difficulty">
-		<option value="1">Very Easy</option>
-		<option value="2">Easy</option>
-		<option value="3">Moderate</option>
-		<option value="4">Hard</option>
-		<option value="5">Very Hard</option>
-	</select>
-	<button type="button" onClick="startGame()">Start</button>
-	<button type="button" onClick="showMe()">Show Me</button>
-	<br/><br/><br/>
-		<h1 id="welcome-div">Welcome to my Sudoku game. </br>Please click the Start button above to start playing!</h1>
+<div id="game-board-wrapper">
+	<table class="game-board">
+		<tr>
+			<td class="normal alt-background">R1C1</td>
+			<td class="normal alt-background">R1C2</td>
+			<td class="normal alt-background heavy-border-right">R1C3</td>
+			<td class="normal">R1C4</td>
+			<td class="normal">R1C5</td>
+			<td class="normal heavy-border-right">R1C6</td>
+			<td class="normal alt-background">R1C7</td>
+			<td class="normal alt-background">R1C8</td>
+			<td class="normal alt-background">R1C9</td>
+		</tr>
+		<tr>
+			<td class="normal alt-background">R2C1</td>
+			<td class="normal alt-background">R2C2</td>
+			<td class="normal alt-background heavy-border-right">R2C3</td>
+			<td class="normal">R2C4</td>
+			<td class="normal">R2C5</td>
+			<td class="normal heavy-border-right">R2C6</td>
+			<td class="normal alt-background">R2C7</td>
+			<td class="normal alt-background">R2C8</td>
+			<td class="normal alt-background">R2C9</td>
+		</tr>
+		<tr>
+			<td class="normal alt-background heavy-border-bottom">R3C1</td>
+			<td class="normal alt-background heavy-border-bottom">R3C2</td>
+			<td class="normal alt-background heavy-border-bottom heavy-border-right">R3C3</td>
+			<td class="normal heavy-border-bottom">R3C4</td>
+			<td class="normal heavy-border-bottom">R3C5</td>
+			<td class="normal heavy-border-bottom heavy-border-right">R3C6</td>
+			<td class="normal alt-background heavy-border-bottom">R3C7</td>
+			<td class="normal alt-background heavy-border-bottom">R3C8</td>
+			<td class="normal alt-background heavy-border-bottom">R3C9</td>
+		</tr>
+		<tr>
+			<td class="normal">R4C1</td>
+			<td class="normal">R4C2</td>
+			<td class="normal heavy-border-right">R4C3</td>
+			<td class="normal alt-background">R4C4</td>
+			<td class="normal alt-background">R4C5</td>
+			<td class="normal alt-background heavy-border-right">R4C6</td>
+			<td class="normal">R4C7</td>
+			<td class="normal">R4C8</td>
+			<td class="normal">R4C9</td>
+		</tr>
+		<tr>
+			<td class="normal">R5C1</td>
+			<td class="normal">R5C2</td>
+			<td class="normal heavy-border-right">R5C3</td>
+			<td class="normal alt-background">R5C4</td>
+			<td class="normal alt-background">R5C5</td>
+			<td class="normal alt-background heavy-border-right">R5C6</td>
+			<td class="normal">R5C7</td>
+			<td class="normal">R5C8</td>
+			<td class="normal">R5C9</td>
+		</tr>
+		<tr>
+			<td class="normal heavy-border-bottom">R6C1</td>
+			<td class="normal heavy-border-bottom">R6C2</td>
+			<td class="normal heavy-border-bottom heavy-border-right">R6C3</td>
+			<td class="normal alt-background heavy-border-bottom">R6C4</td>
+			<td class="normal alt-background heavy-border-bottom">R6C5</td>
+			<td class="normal alt-background heavy-border-bottom heavy-border-right">R6C6</td>
+			<td class="normal heavy-border-bottom">R6C7</td>
+			<td class="normal heavy-border-bottom">R6C8</td>
+			<td class="normal heavy-border-bottom">R6C9</td>
+		</tr>
+		<tr>
+			<td class="normal alt-background">R7C1</td>
+			<td class="normal alt-background">R7C2</td>
+			<td class="normal alt-background heavy-border-right">R7C3</td>
+			<td class="normal">R7C4</td>
+			<td class="normal">R7C5</td>
+			<td class="normal heavy-border-right">R7C6</td>
+			<td class="normal alt-background">R7C7</td>
+			<td class="normal alt-background">R7C8</td>
+			<td class="normal alt-background">R7C9</td>
+		</tr>
+		<tr>
+			<td class="normal alt-background">R8C1</td>
+			<td class="normal alt-background">R8C2</td>
+			<td class="normal alt-background heavy-border-right">R8C3</td>
+			<td class="normal">R8C4</td>
+			<td class="normal">R8C5</td>
+			<td class="normal heavy-border-right">R8C6</td>
+			<td class="normal alt-background">R8C7</td>
+			<td class="normal alt-background">R8C8</td>
+			<td class="normal alt-background">R8C9</td>
+		</tr>
+		<tr>
+			<td class="normal alt-background">R9C1</td>
+			<td class="normal alt-background">R9C2</td>
+			<td class="normal alt-background heavy-border-right">R9C3</td>
+			<td class="normal">R9C4</td>
+			<td class="normal">R9C5</td>
+			<td class="normal heavy-border-right">R9C6</td>
+			<td class="normal alt-background">R9C7</td>
+			<td class="normal alt-background">R9C8</td>
+			<td class="normal alt-background">R9C9</td>
+		</tr>
+	</table>
 </div>
-<div id="game-wrapper">
-	<div id="game-header-wrapper">
-		<span id="game-header"></span>
-		<span id="game-timer"></span>
-	</div>
-	<div id="game-board-wrapper"></div>
-	<div id="game-pad-wrapper" class="hide">
-		<table id="game-pad">
-			<tr>
-				<td><button onClick="myGame.playNumber(1);">1</button></td>
-				<td><button onClick="myGame.playNumber(2);">2</button></td>
-				<td><button onClick="myGame.playNumber(3);">3</button></td>
-			</tr>
-			<tr>
-				<td><button onClick="myGame.playNumber(4);">4</button></td>
-				<td><button onClick="myGame.playNumber(5);">5</button></td>
-				<td><button onClick="myGame.playNumber(6);">6</button></td>
-			</tr>
-			<tr>
-				<td><button onClick="myGame.playNumber(7);">7</button></td>
-				<td><button onClick="myGame.playNumber(8);">8</button></td>
-				<td><button onClick="myGame.playNumber(9);">9</button></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td><a href="javascript: void(0);" onClick="myGame.clearNumbers();"><img src="img/cross.png" width=30></a></td>
-				<td><img src="img/pause.png" width=30></td>
-			</tr>
-		<table>
-	</div>
-	<div id="game-error-wrapper"></div>
+<div id="game-controls">
+	<button>Start</button>
+	<button>Finish</button>
 </div>
-<div id="fedtest"></div>
 </body>
 </html>

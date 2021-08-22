@@ -4,14 +4,8 @@ html, body {
 	font: 20px arial, sans-serif;
 }
 
-div#header {margin: auto;}
-div#game-wrapper {width: 70%;}
-
-div#game-header-wrapper {width: 100%; padding: 5px;}
-div#game-board-wrapper {float: left; width: 50%;}
-div#game-pad-wrapper {float: right; width: 50%; height: 170px;}
-div#game-error-wrapper {float: left; width: 100%;}
-
+div#game-board-wrapper {float: left; width: 70%;}
+div#game-controls {float: right; width: 30%;}
 
 table.game-board {
 	margin: auto;
@@ -27,75 +21,30 @@ table.game-board td {
 	text-align: center;
 }
 
-table.game-board td.highlighted {
-	background-color: #EEEEEE;
-}
-
-table.game-board td.row-last {
-	border-bottom: 1px solid black;
-}
-
-table.game-board td.hard-top {
-	border-top: 2px solid black;
-}
-
-table.game-board td.col-last {
-	border-right: 1px solid black;
-}
-
-table.game-board td.hard-left {
-	border-left: 2px solid black;
-}
-
 table.game-board td.normal {
 	border-right: 1px solid black;
 	border-bottom: 1px solid black;
 }
 
-table.game-board td.hand {
-	cursor: pointer;
-}
+table.game-board td.heavy-border-right {border-right: 2px solid black;}
+table.game-board td.heavy-border-bottom {border-bottom: 2px solid black;}
+table.game-board td.alt-background {background-color: #eeeeee;}
 
-table.game-board td.selectedNumber {
-	background-color: yellow;
-}
-
-table.game-board td.errorCell {
-	background-color: #F00;
-}
-
-table.game-board td.bold {
-	font-weight: bold;
-}
-
-table.game-board td.lighter {
-	font-weight: lighter;
-}
-
-table#game-pad {
-	border-collapse: collapse;
-	border: 1px solid black;
-}
-
-table#game-pad td {
-	width: 60px;
-	height: 40px;
+button {
+	display: block;
+	background-color: #3d49f8;
+	border-radius: 10px;
+	border: 4px double #cccccc;
+	color: #eeeeee;
 	text-align: center;
-	background-color: grey;
-}
-
-table#game-pad button {
-	width: 60px;
-	height: 40px;
-	font-size: 25px;
+	font-size: 28px;
+	padding: 20px;
+	width: 200px;
+	transition: all 0.5s;
 	cursor: pointer;
+	margin: 0 0 20px 0;
 }
 
-div#game-error-wrapper ul {
-	list-style: none;
-	font-size: 15px;
+button:hover {
+	background-color: #636dfd;
 }
-
-/* generic classes */
-.hide {display: none;}
-.show {display: block;}
