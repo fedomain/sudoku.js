@@ -1,34 +1,72 @@
 html, body {
-	padding: 10px;
+	padding: 0;
 	margin: 0;
 	font: 20px arial, sans-serif;
 }
 
-div#game-board-wrapper {float: left; width: 70%;}
-div#game-controls {float: right; width: 30%;}
+div#wrapper {
+  min-width: 70%;
+  min-height: 70%;
+}
 
-table.game-board {
+div#game-board-wrapper {
+  width: 490px;
+  height: 490px;
+  float: left;
+  margin: 10px;
+}
+
+div#game-pad-wrapper {
+  width: 300px;
+  height: 300px;
+  float: left;
+  margin: 10px;
+}
+
+table#game-board {
 	margin: auto;
 	border-collapse: collapse;
 	border: 2px solid black;
 }
 
-table.game-board td {
+table#game-board td {
 	width: 30px;
 	height: 30px;
 	padding: 10px;
-	font-size: 30px;
+	font-size: 24px;
 	text-align: center;
+	cursor: pointer;
+	background-color: #ffffff;
 }
 
-table.game-board td.normal {
+table#game-board td.normal {
 	border-right: 1px solid black;
 	border-bottom: 1px solid black;
 }
 
-table.game-board td.heavy-border-right {border-right: 2px solid black;}
-table.game-board td.heavy-border-bottom {border-bottom: 2px solid black;}
-table.game-board td.alt-background {background-color: #eeeeee;}
+table#game-board td.heavy-border-right {border-right: 2px solid black;}
+table#game-board td.heavy-border-bottom {border-bottom: 2px solid black;}
+table#game-board td.selected-background {background-color: #eeeeee;}
+table#game-board td.selected-cell {background-color: #adcaf7;}
+table#game-board td.same-number-background {background-color: #929191;}
+
+table#game-pad {
+	margin: auto;
+	border-collapse: collapse;
+}
+
+table#game-pad td {
+	width: 100px;
+	height: 100px;
+	font-size: 40px;
+	text-align: center;
+  color: #005fee;
+  background-color: #eeeeee;
+  border: 5px solid #ffffff;
+  cursor: pointer;
+}
+
+table#game-pad td:hover {background-color: #a3adcf;}
 
 button {
 	display: block;
@@ -39,7 +77,7 @@ button {
 	text-align: center;
 	font-size: 28px;
 	padding: 20px;
-	width: 200px;
+	width: 300px;
 	transition: all 0.5s;
 	cursor: pointer;
 	margin: 0 0 20px 0;

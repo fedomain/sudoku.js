@@ -1,158 +1,144 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<hrml>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>Sudoku</title>
+<title>Fedtest</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="js/helper.js"></script>
+<script src="js/sudoku.js"></script>
+<script src="js/game.js"></script>
 <script>
-	function getRndInteger(minimum, maximum) {
-		var max = maximum + 1;
-		var result = Math.floor(Math.random() * (max - minimum)) + minimum;
-		return result;
-	}
-
-	function getNumberOfRandoms(number, min, max) {
-		var random = 0;
-		var result = [];
-
-		while (result.length < number) {
-			random = getRndInteger(min, max);
-
-			if (!result.includes(random)) {
-				result.push(random);
-			}
-		}
-
-		return result;
-	}
-
-	function getStart() {
-		showResult(getNumberOfRandoms(30, 1, 81));
-	}
-
-	function getFinish() {
-		showResult(getNumberOfRandoms(9, 1, 9));
-	}
-
-	function showResult(result) {
-		var html = "";
-		for (var i=0; i<result.length; i++) {
-			html += "[" + result[i] + "] ";
-		}
-
-		document.getElementById("result").innerHTML = html;
-	}
+function playNumber(num) {
+  alert(num);
+}
 </script>
 </head>
 
 <body>
-<div id="game-board-wrapper">
-	<table class="game-board">
-		<tr id="row1">
-			<td id="R1C1" class="normal alt-background">R1C1</td>
-			<td id="R1C2" class="normal alt-background">R1C2</td>
-			<td id="R1C3" class="normal alt-background heavy-border-right">R1C3</td>
-			<td id="R1C4" class="normal">R1C4</td>
-			<td id="R1C5" class="normal">R1C5</td>
-			<td id="R1C6" class="normal heavy-border-right">R1C6</td>
-			<td id="R1C7" class="normal alt-background">R1C7</td>
-			<td id="R1C8" class="normal alt-background">R1C8</td>
-			<td id="R1C9" class="normal alt-background">R1C9</td>
-		</tr>
-		<tr id="row2">
-			<td id="R2C1" class="normal alt-background">R2C1</td>
-			<td id="R2C2" class="normal alt-background">R2C2</td>
-			<td id="R2C3" class="normal alt-background heavy-border-right">R2C3</td>
-			<td id="R2C4" class="normal">R2C4</td>
-			<td id="R2C5" class="normal">R2C5</td>
-			<td id="R2C6" class="normal heavy-border-right">R2C6</td>
-			<td id="R2C7" class="normal alt-background">R2C7</td>
-			<td id="R2C8" class="normal alt-background">R2C8</td>
-			<td id="R2C9" class="normal alt-background">R2C9</td>
-		</tr>
-		<tr id="row3">
-			<td id="R3C1" class="normal alt-background heavy-border-bottom">R3C1</td>
-			<td id="R3C2" class="normal alt-background heavy-border-bottom">R3C2</td>
-			<td id="R3C3" class="normal alt-background heavy-border-bottom heavy-border-right">R3C3</td>
-			<td id="R3C4" class="normal heavy-border-bottom">R3C4</td>
-			<td id="R3C5" class="normal heavy-border-bottom">R3C5</td>
-			<td id="R3C6" class="normal heavy-border-bottom heavy-border-right">R3C6</td>
-			<td id="R3C7" class="normal alt-background heavy-border-bottom">R3C7</td>
-			<td id="R3C8" class="normal alt-background heavy-border-bottom">R3C8</td>
-			<td id="R3C9" class="normal alt-background heavy-border-bottom">R3C9</td>
-		</tr>
-		<tr id="row4">
-			<td id="R4C1" class="normal">R4C1</td>
-			<td id="R4C2" class="normal">R4C2</td>
-			<td id="R4C3" class="normal heavy-border-right">R4C3</td>
-			<td id="R4C4" class="normal alt-background">R4C4</td>
-			<td id="R4C5" class="normal alt-background">R4C5</td>
-			<td id="R4C6" class="normal alt-background heavy-border-right">R4C6</td>
-			<td id="R4C7" class="normal">R4C7</td>
-			<td id="R4C8" class="normal">R4C8</td>
-			<td id="R4C9" class="normal">R4C9</td>
-		</tr>
-		<tr id="row5">
-			<td id="R5C1" class="normal">R5C1</td>
-			<td id="R5C2" class="normal">R5C2</td>
-			<td id="R5C3" class="normal heavy-border-right">R5C3</td>
-			<td id="R5C4" class="normal alt-background">R5C4</td>
-			<td id="R5C5" class="normal alt-background">R5C5</td>
-			<td id="R5C6" class="normal alt-background heavy-border-right">R5C6</td>
-			<td id="R5C7" class="normal">R5C7</td>
-			<td id="R5C8" class="normal">R5C8</td>
-			<td id="R5C9" class="normal">R5C9</td>
-		</tr>
-		<tr id="row6">
-			<td id="R6C1" class="normal heavy-border-bottom">R6C1</td>
-			<td id="R6C2" class="normal heavy-border-bottom">R6C2</td>
-			<td id="R6C3" class="normal heavy-border-bottom heavy-border-right">R6C3</td>
-			<td id="R6C4" class="normal alt-background heavy-border-bottom">R6C4</td>
-			<td id="R6C5" class="normal alt-background heavy-border-bottom">R6C5</td>
-			<td id="R6C6" class="normal alt-background heavy-border-bottom heavy-border-right">R6C6</td>
-			<td id="R6C7" class="normal heavy-border-bottom">R6C7</td>
-			<td id="R6C8" class="normal heavy-border-bottom">R6C8</td>
-			<td id="R6C9" class="normal heavy-border-bottom">R6C9</td>
-		</tr>
-		<tr id="row7">
-			<td id="R7C1" class="normal alt-background">R7C1</td>
-			<td id="R7C2" class="normal alt-background">R7C2</td>
-			<td id="R7C3" class="normal alt-background heavy-border-right">R7C3</td>
-			<td id="R7C4" class="normal">R7C4</td>
-			<td id="R7C5" class="normal">R7C5</td>
-			<td id="R7C6" class="normal heavy-border-right">R7C6</td>
-			<td id="R7C7" class="normal alt-background">R7C7</td>
-			<td id="R7C8" class="normal alt-background">R7C8</td>
-			<td id="R7C9" class="normal alt-background">R7C9</td>
-		</tr>
-		<tr id="row8">
-			<td id="R8C1" class="normal alt-background">R8C1</td>
-			<td id="R8C2" class="normal alt-background">R8C2</td>
-			<td id="R8C3" class="normal alt-background heavy-border-right">R8C3</td>
-			<td id="R8C4" class="normal">R8C4</td>
-			<td id="R8C5" class="normal">R8C5</td>
-			<td id="R8C6" class="normal heavy-border-right">R8C6</td>
-			<td id="R8C7" class="normal alt-background">R8C7</td>
-			<td id="R8C8" class="normal alt-background">R8C8</td>
-			<td id="R8C9" class="normal alt-background">R8C9</td>
-		</tr>
-		<tr id="row9">
-			<td id="R9C1" class="normal alt-background">R9C1</td>
-			<td id="R9C2" class="normal alt-background">R9C2</td>
-			<td id="R9C3" class="normal alt-background heavy-border-right">R9C3</td>
-			<td id="R9C4" class="normal">R9C4</td>
-			<td id="R9C5" class="normal">R9C5</td>
-			<td id="R9C6" class="normal heavy-border-right">R9C6</td>
-			<td id="R9C7" class="normal alt-background">R9C7</td>
-			<td id="R9C8" class="normal alt-background">R9C8</td>
-			<td id="R9C9" class="normal alt-background">R9C9</td>
-		</tr>
-	</table>
+<div id="wrapper">
+  <div id="game-board-wrapper">
+    <table id="game-board">
+      <tr id="row1">
+        <td id="r0c0" class="normal" onClick="game.cellSelect(0,0);"></td>
+        <td id="r0c1" class="normal" onClick="game.cellSelect(0,1);"></td>
+        <td id="r0c2" class="normal heavy-border-right" onClick="game.cellSelect(0,2);"></td>
+        <td id="r0c3" class="normal" onClick="game.cellSelect(0,3);"></td>
+        <td id="r0c4" class="normal" onClick="game.cellSelect(0,4);"></td>
+        <td id="r0c5" class="normal heavy-border-right" onClick="game.cellSelect(0,5);"></td>
+        <td id="r0c6" class="normal" onClick="game.cellSelect(0,6);"></td>
+        <td id="r0c7" class="normal" onClick="game.cellSelect(0,7);"></td>
+        <td id="r0c8" class="normal" onClick="game.cellSelect(0,8);"></td>
+      </tr>
+      <tr id="row2">
+        <td id="r1c0" class="normal" onClick="game.cellSelect(1,0);"></td>
+        <td id="r1c1" class="normal" onClick="game.cellSelect(1,1);"></td>
+        <td id="r1c2" class="normal heavy-border-right" onClick="game.cellSelect(1,2);"></td>
+        <td id="r1c3" class="normal" onClick="game.cellSelect(1,3);"></td>
+        <td id="r1c4" class="normal" onClick="game.cellSelect(1,4);"></td>
+        <td id="r1c5" class="normal heavy-border-right" onClick="game.cellSelect(1,5);"></td>
+        <td id="r1c6" class="normal" onClick="game.cellSelect(1,6);"></td>
+        <td id="r1c7" class="normal" onClick="game.cellSelect(1,7);"></td>
+        <td id="r1c8" class="normal" onClick="game.cellSelect(1,8);"></td>
+      </tr>
+      <tr id="row3">
+        <td id="r2c0" class="normal heavy-border-bottom" onClick="game.cellSelect(2,0);"></td>
+        <td id="r2c1" class="normal heavy-border-bottom" onClick="game.cellSelect(2,1);"></td>
+        <td id="r2c2" class="normal heavy-border-bottom heavy-border-right" onClick="game.cellSelect(2,2);"></td>
+        <td id="r2c3" class="normal heavy-border-bottom" onClick="game.cellSelect(2,3);"></td>
+        <td id="r2c4" class="normal heavy-border-bottom" onClick="game.cellSelect(2,4);"></td>
+        <td id="r2c5" class="normal heavy-border-bottom heavy-border-right" onClick="game.cellSelect(2,5);"></td>
+        <td id="r2c6" class="normal heavy-border-bottom" onClick="game.cellSelect(2,6);"></td>
+        <td id="r2c7" class="normal heavy-border-bottom" onClick="game.cellSelect(2,7);"></td>
+        <td id="r2c8" class="normal heavy-border-bottom" onClick="game.cellSelect(2,8);"></td>
+      </tr>
+      <tr id="row4">
+        <td id="r3c0" class="normal" onClick="game.cellSelect(3,0);"></td>
+        <td id="r3c1" class="normal" onClick="game.cellSelect(3,1);"></td>
+        <td id="r3c2" class="normal heavy-border-right" onClick="game.cellSelect(3,2);"></td>
+        <td id="r3c3" class="normal" onClick="game.cellSelect(3,3);"></td>
+        <td id="r3c4" class="normal" onClick="game.cellSelect(3,4);"></td>
+        <td id="r3c5" class="normal heavy-border-right" onClick="game.cellSelect(3,5);"></td>
+        <td id="r3c6" class="normal" onClick="game.cellSelect(3,6);"></td>
+        <td id="r3c7" class="normal" onClick="game.cellSelect(3,7);"></td>
+        <td id="r3c8" class="normal" onClick="game.cellSelect(3,8);"></td>
+      </tr>
+      <tr id="row5">
+        <td id="r4c0" class="normal" onClick="game.cellSelect(4,0);"></td>
+        <td id="r4c1" class="normal" onClick="game.cellSelect(4,1);"></td>
+        <td id="r4c2" class="normal heavy-border-right" onClick="game.cellSelect(4,2);"></td>
+        <td id="r4c3" class="normal" onClick="game.cellSelect(4,3);"></td>
+        <td id="r4c4" class="normal" onClick="game.cellSelect(4,4);"></td>
+        <td id="r4c5" class="normal heavy-border-right" onClick="game.cellSelect(4,5);"></td>
+        <td id="r4c6" class="normal" onClick="game.cellSelect(4,6);"></td>
+        <td id="r4c7" class="normal" onClick="game.cellSelect(4,7);"></td>
+        <td id="r4c8" class="normal" onClick="game.cellSelect(4,8);"></td>
+      </tr>
+      <tr id="row6">
+        <td id="r5c0" class="normal heavy-border-bottom" onClick="game.cellSelect(5,0);"></td>
+        <td id="r5c1" class="normal heavy-border-bottom" onClick="game.cellSelect(5,1);"></td>
+        <td id="r5c2" class="normal heavy-border-bottom heavy-border-right" onClick="game.cellSelect(5,2);"></td>
+        <td id="r5c3" class="normal heavy-border-bottom" onClick="game.cellSelect(5,3);"></td>
+        <td id="r5c4" class="normal heavy-border-bottom" onClick="game.cellSelect(5,4);"></td>
+        <td id="r5c5" class="normal heavy-border-bottom heavy-border-right" onClick="game.cellSelect(5,5);"></td>
+        <td id="r5c6" class="normal heavy-border-bottom" onClick="game.cellSelect(5,6);"></td>
+        <td id="r5c7" class="normal heavy-border-bottom" onClick="game.cellSelect(5,7);"></td>
+        <td id="r5c8" class="normal heavy-border-bottom" onClick="game.cellSelect(5,8);"></td>
+      </tr>
+      <tr id="row7">
+        <td id="r6c0" class="normal" onClick="game.cellSelect(6,0);"></td>
+        <td id="r6c1" class="normal" onClick="game.cellSelect(6,1);"></td>
+        <td id="r6c2" class="normal heavy-border-right" onClick="game.cellSelect(6,2);"></td>
+        <td id="r6c3" class="normal" onClick="game.cellSelect(6,3);"></td>
+        <td id="r6c4" class="normal" onClick="game.cellSelect(6,4);"></td>
+        <td id="r6c5" class="normal heavy-border-right" onClick="game.cellSelect(6,5);"></td>
+        <td id="r6c6" class="normal" onClick="game.cellSelect(6,6);"></td>
+        <td id="r6c7" class="normal" onClick="game.cellSelect(6,7);"></td>
+        <td id="r6c8" class="normal" onClick="game.cellSelect(6,8);"></td>
+      </tr>
+      <tr id="row8">
+        <td id="r7c0" class="normal" onClick="game.cellSelect(7,0);"></td>
+        <td id="r7c1" class="normal" onClick="game.cellSelect(7,1);"></td>
+        <td id="r7c2" class="normal heavy-border-right" onClick="game.cellSelect(7,2);"></td>
+        <td id="r7c3" class="normal" onClick="game.cellSelect(7,3);"></td>
+        <td id="r7c4" class="normal" onClick="game.cellSelect(7,4);"></td>
+        <td id="r7c5" class="normal heavy-border-right" onClick="game.cellSelect(7,5);"></td>
+        <td id="r7c6" class="normal" onClick="game.cellSelect(7,6);"></td>
+        <td id="r7c7" class="normal" onClick="game.cellSelect(7,7);"></td>
+        <td id="r7c8" class="normal" onClick="game.cellSelect(7,8);"></td>
+      </tr>
+      <tr id="row9">
+        <td id="r8c0" class="normal" onClick="game.cellSelect(8,0);"></td>
+        <td id="r8c1" class="normal" onClick="game.cellSelect(8,1);"></td>
+        <td id="r8c2" class="normal heavy-border-right" onClick="game.cellSelect(8,2);"></td>
+        <td id="r8c3" class="normal" onClick="game.cellSelect(8,3);"></td>
+        <td id="r8c4" class="normal" onClick="game.cellSelect(8,4);"></td>
+        <td id="r8c5" class="normal heavy-border-right" onClick="game.cellSelect(8,5);"></td>
+        <td id="r8c6" class="normal" onClick="game.cellSelect(8,6);"></td>
+        <td id="r8c7" class="normal" onClick="game.cellSelect(8,7);"></td>
+        <td id="r8c8" class="normal" onClick="game.cellSelect(8,8);"></td>
+      </tr>
+    </table>
+  </div>
+  <div id="game-pad-wrapper">
+    <button onclick="game.startGame();" type="button">New Game</button>
+    <table id="game-pad">
+      <tr>
+        <td onclick="playNumber(1)">1</td>
+        <td onclick="playNumber(2)">2</td>
+        <td onclick="playNumber(3)">3</td>
+      </tr>
+      <tr>
+        <td onclick="playNumber(4)">4</td>
+        <td onclick="playNumber(5)">5</td>
+        <td onclick="playNumber(6)">6</td>
+      </tr>
+      <tr>
+        <td onclick="playNumber(7)">7</td>
+        <td onclick="playNumber(8)">8</td>
+        <td onclick="playNumber(9)">9</td>
+      </tr>
+    </table>
+  </div>
 </div>
-<div id="game-controls">
-	<button onClick="getStart();">Start</button>
-	<button onClick="getFinish();">Finish</button>
-</div>
-<div id="result"></div>
 </body>
-</html>
+</hrml>
