@@ -36,6 +36,7 @@ table#game-board td {
 	font-size: 24px;
 	text-align: center;
 	cursor: pointer;
+	color: #005fee;
 	background-color: #ffffff;
 }
 
@@ -44,11 +45,14 @@ table#game-board td.normal {
 	border-bottom: 1px solid black;
 }
 
+table#game-board td.openPosition {color: #000000;}
+
 table#game-board td.heavy-border-right {border-right: 2px solid black;}
 table#game-board td.heavy-border-bottom {border-bottom: 2px solid black;}
 table#game-board td.selected-background {background-color: #eeeeee;}
 table#game-board td.selected-cell {background-color: #adcaf7;}
 table#game-board td.same-number-background {background-color: #929191;}
+table#game-board td.warning {background-color: #fda1a1;}
 
 table#game-pad {
 	margin: auto;

@@ -6,12 +6,8 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script src="js/helper.js"></script>
 <script src="js/sudoku.js"></script>
+<script src="js/cell.js"></script>
 <script src="js/game.js"></script>
-<script>
-function playNumber(num) {
-  alert(num);
-}
-</script>
 </head>
 
 <body>
@@ -123,19 +119,19 @@ function playNumber(num) {
     <button onclick="game.startGame();" type="button">New Game</button>
     <table id="game-pad">
       <tr>
-        <td onclick="playNumber(1)">1</td>
-        <td onclick="playNumber(2)">2</td>
-        <td onclick="playNumber(3)">3</td>
+        <td onclick="game.playNumber(1)">1</td>
+        <td onclick="game.playNumber(2)">2</td>
+        <td onclick="game.playNumber(3)">3</td>
       </tr>
       <tr>
-        <td onclick="playNumber(4)">4</td>
-        <td onclick="playNumber(5)">5</td>
-        <td onclick="playNumber(6)">6</td>
+        <td onclick="game.playNumber(4)">4</td>
+        <td onclick="game.playNumber(5)">5</td>
+        <td onclick="game.playNumber(6)">6</td>
       </tr>
       <tr>
-        <td onclick="playNumber(7)">7</td>
-        <td onclick="playNumber(8)">8</td>
-        <td onclick="playNumber(9)">9</td>
+        <td onclick="game.playNumber(7)">7</td>
+        <td onclick="game.playNumber(8)">8</td>
+        <td onclick="game.playNumber(9)">9</td>
       </tr>
     </table>
   </div>

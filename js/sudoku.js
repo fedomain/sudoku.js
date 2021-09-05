@@ -101,7 +101,19 @@ sudoku.solveGrid = (grid) => {
 }
 
 sudoku.setupAnswerBoard = () => {
-  sudoku.answerBoard = helper.getGrid();
+  let grid = [];
+
+  grid[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  grid[1] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  grid[2] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  grid[3] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  grid[4] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  grid[5] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  grid[6] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  grid[7] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  grid[8] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+  sudoku.answerBoard = grid;
 
   sudoku.setFirstNine(sudoku.answerBoard);
   sudoku.solveGrid(sudoku.answerBoard);

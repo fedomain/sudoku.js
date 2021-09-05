@@ -1,21 +1,5 @@
 let helper = new Object();
 
-helper.getGrid = () => {
-  let grid = [];
-
-  grid[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  grid[1] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  grid[2] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  grid[3] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  grid[4] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  grid[5] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  grid[6] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  grid[7] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  grid[8] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-  return grid;
-}
-
 helper.getRndIntegerFromRange = (minimum, maximum) => {
   let max = maximum + 1;
   let result = Math.floor(Math.random() * (max - minimum)) + minimum;
