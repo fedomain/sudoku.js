@@ -2,12 +2,15 @@
 <hrml>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>Fedtest</title>
+<title>Sudoku Game</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<script src="js/helper.js"></script>
-<script src="js/sudoku.js"></script>
 <script src="js/cell.js"></script>
+<script src="js/helpers.js"></script>
 <script src="js/game.js"></script>
+<script src="js/sudoku.js"></script>
+<script>
+let sudoku = new Sudoku();
+</script>
 </head>
 
 <body>
@@ -116,7 +119,7 @@
     </table>
   </div>
   <div id="game-pad-wrapper">
-    <button onclick="game.startGame();" type="button">New Game</button>
+    <button onclick="sudoku.startGame();" type="button">New Game</button>
     <table id="game-pad">
       <tr>
         <td onclick="game.playNumber(1)">1</td>

@@ -20,21 +20,51 @@ Phase 1 - Setting up the game
 
 Objects:
 
-Helper
-  getGrid - gets a blank 2 dimensional array
-  getRndInteger - get a random number from a range
-  getNumberOfRandoms - get an array of random numbers
-  checkGrid - check if the entire board is filled up
+Helpers
+- getRndIntegerFromRange - get a random number from a range
+- getNumberOfRandoms - get an array of random numbers
+- checkGrid - check if the entire board is filled up
+- getHighlightStart - get the start row or col based on the selected cell
 
 Sudoku
-  setFirstNine - set the first 3x3 grid with random numbers
-  solveGrid - algorithm to solve a 9x9 sudoku game
-  startGame - kick off a new game
+- answerBoard
+- gameBoard
+
+- setFirstNine - set the first 3x3 grid with random numbers
+- solveGrid - algorithm to solve a 9x9 sudoku game
+- setupAnswerGrid - setup the answer grid
+- setOpenPositions - set 30 random positions open (visible) on the game board
+- startGame - setup the answer grid and the game board
 
 Game
-  setOpenPositions - set 30 random positions open (visible) on the game board
-  setupGame - populate the game board with the first 30 random open positions
-  resetGrid - remove all numbers from the game board
+- selectedCell
+
+- setupGame - populate the game board with the first 30 random open positions (front end)
+- resetGame - remove all numbers from the game board (front end)
+- resetCell - remove all highlight class from the game board cells (front end)
+- cellSelect - apply all highlighting rules when a cell is selected (front end)
+- playNumber - apply all highlighting rules when a number is played on a cell (front end)
+
+Cell
+
+
+Front end changes
+
+When a cell select
+- Highlight selected cell (light blue)
+- Highlight selected cell's row (light grey)
+- Highlight selected cell's col (light grey)
+- Highlight selected cell's 3x3 sub-grid (light grey)
+ If selected cell have a number
+ - Highlight all other cells with the same number (light dark blue)
+ When a number is selected
+ - Highlight all other cells with the same number (light dark blue)
+ - Run the function to check the validity of the number
+  If the number is not valid
+  - Highlight the selected number red
+  - Highlight the selected cell red (but leave it light blue when the cell is still selected)
+  - Highlight the violated cell red
+  - Leave the above state on as long as the selected cell continues to have the invalid number in it
 
 
 
