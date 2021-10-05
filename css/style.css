@@ -46,7 +46,7 @@ table#game-board td.heavy-border-bottom {border-bottom: 2px solid black;}
 /* Cell background & Cell number colour */
 table#game-board td.selected-cell {background-color: #adcaf7;}
 table#game-board td.selected-background {background-color: #eeeeee;}
-table#game-board td.same-number-background {background-color: #929191;}
+table#game-board td.same-number-background {background-color: #9fa5fc;}
 table#game-board td.warning {background-color: #fda1a1;}
 
 
@@ -79,7 +79,7 @@ table#game-pad td:hover {background-color: #a3adcf;}
 
 
 /* Buttons */
-button {
+button#btn_new_game {
 	display: block;
 	background-color: #3d49f8;
 	border-radius: 10px;
@@ -94,6 +94,6 @@ button {
 	margin: 0 0 20px 0;
 }
 
-button:hover {
+button#btn_new_game:hover {
 	background-color: #636dfd;
 }

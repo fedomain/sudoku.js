@@ -23,30 +23,47 @@ Objects:
 Helpers
 - getRndIntegerFromRange - get a random number from a range
 - getNumberOfRandoms - get an array of random numbers
-- checkGrid - check if the entire board is filled up
 - getHighlightStart - get the start row or col based on the selected cell
 
 Sudoku
 - answerBoard
 - gameBoard
 
+- startGame - setup the answer grid and the game board
+- setupAnswerBoard - setup the answer board
+- checkGrid - check if the entire board is filled up
+- printGrid - print the js 2 dimensional array grid
 - setFirstNine - set the first 3x3 grid with random numbers
 - solveGrid - algorithm to solve a 9x9 sudoku game
-- setupAnswerGrid - setup the answer grid
-- setOpenPositions - set 30 random positions open (visible) on the game board
-- startGame - setup the answer grid and the game board
 
 Game
 - selectedCell
+- answerBoard
+- gameBoard
 
-- setupGame - populate the game board with the first 30 random open positions (front end)
+- setupGameBoard - populate the game board with the first 30 random open positions (front end)
+- setupGame
 - resetGame - remove all numbers from the game board (front end)
 - resetCell - remove all highlight class from the game board cells (front end)
 - cellSelect - apply all highlighting rules when a cell is selected (front end)
 - playNumber - apply all highlighting rules when a number is played on a cell (front end)
+- render
 
 Cell
+- row
+- col
+- num
+- isOpen
+- isSelected
+- classList
+- tempClassList
 
+- addTempClass
+- removeTempClass
+- getTempClassList
+- addClass
+- removeClass
+- getClassList
 
 Front end changes
 

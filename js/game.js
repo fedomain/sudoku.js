@@ -1,15 +1,19 @@
 class Game extends Helpers {
-  constructor(answerBoard) {
+  constructor(answerGrid) {
     super();
 
     // PROPERTIES
-    this.selectedCell = [0,0];
-    this.answerBoard = answerBoard;
-    this.gameBoard = this.setupGameBoard(answerBoard);
+    this.selectedCell = [-1,-1];
+    this.answerGrid = answerGrid;
+    this.gameBoard = this.setupGame(answerGrid);
+
+    // Run these to clear the board
+    this.resetGameBoard();
+    this.setupGameBoard();
   }
 
   // METHODS
-  setupGameBoard(answer) {
+  setupGame(answerGrid) {
     let game = [];
     let count = 1;
     let openPositions = super.getNumberOfRandoms(30,1,81);
@@ -17,12 +21,12 @@ class Game extends Helpers {
     for (var i=0; i<9; i++) {
       game[i] = [];
       for (var j=0; j<9; j++) {
-        game[i][j] = new Cell(i,j,0,"");
+        game[i][j] = new Cell(i,j,0,[]);
 
         if (openPositions.includes(count)) {
           game[i][j].isOpen = true;
-          game[i][j].num = answer[i][j];
-          game[i][j].classList = "open-position";
+          game[i][j].num = answerGrid[i][j];
+          game[i][j].addClass("open-position");
         }
         count++;
       }
@@ -31,121 +35,177 @@ class Game extends Helpers {
     return game;
   }
 
-  setupGame() {
+  setupGameBoard() {
     for (var i=0; i<9; i++) {
       for (var j=0; j<9; j++) {
         if (this.gameBoard[i][j].num != 0) {
           document.getElementById("r" + i + "c" + j).innerHTML = this.gameBoard[i][j].num;
-          document.getElementById("r" + i + "c" + j).classList.add(this.gameBoard[i][j].classList);
+          document.getElementById("r" + i + "c" + j).classList.add(this.gameBoard[i][j].getClassList());
         }
       }
     }
   }
 
-  resetGame() {
-    for (var i=0; i<9; i++)
-      for (var j=0; j<9; j++)
-        document.getElementById("r" + i + "c" + j).innerHTML = "";
-  }
-
-  resetCell() {
+  resetGameBoard() {
     for (var i=0; i<9; i++) {
       for (var j=0; j<9; j++) {
-        if (sudoku.gameBoard[i][j].classList != "") {
-          document.getElementById("r" + i + "c" + j).classList.remove(sudoku.gameBoard[i][j].classList);
-          sudoku.gameBoard[i][j].classList = "";
-        }
+        document.getElementById("r" + i + "c" + j).innerHTML = "";
       }
     }
   }
 
-  cellSelect(r,c) {
-    let rowStart = helper.getHighlightStart(r);
-    let colStart = helper.getHighlightStart(c);
-  
-    game.resetCell();
-    game.selectedCell = [r,c];
-  
+  setCellHighlight() {
+    let r = this.selectedCell[0];
+    let c = this.selectedCell[1];
+
+    let rowStart = super.getHighlightStart(r);
+    let colStart = super.getHighlightStart(c);
+
+    // set selected cell color
+    this.gameBoard[r][c].isSelected = true;
+    document.getElementById("r" + r + "c" + c).classList.add("selected-cell");
+
     // set row and col background color
     for (var i=0; i<9; i++) {
-      sudoku.gameBoard[r][i].className = "selected-background";
-      sudoku.gameBoard[i][c].className = "selected-background";
-  
-      document.getElementById("r" + r + "c" + i).classList.add("selected-background");
-      document.getElementById("r" + i + "c" + c).classList.add("selected-background");
+      if (!this.gameBoard[r][i].isSelected) {
+        document.getElementById("r" + r + "c" + i).classList.add("selected-background");
+      }
+      
+      if (!this.gameBoard[i][c].isSelected) {
+        document.getElementById("r" + i + "c" + c).classList.add("selected-background");
+      }
     }
   
-    // set sub grid background color
+    // set 3x3 sub grid background color
     for (var i=rowStart; i<rowStart+3; i++) {
       for (var j=colStart; j<colStart+3; j++) {
-        sudoku.gameBoard[i][j].className = "selected-background";
-        document.getElementById("r" + i + "c" + j).classList.add("selected-background");
+        if (!this.gameBoard[i][j].isSelected) {
+          document.getElementById("r" + i + "c" + j).classList.add("selected-background");
+        }
       }
     }
   
     // set all cell with the same number a new background color
-    let selectedNumber = sudoku.gameBoard[r][c];
-  
-    if (selectedNumber != 0) {
+    if (this.gameBoard[r][c].num != 0) {
       for (var i=0; i<9; i++) {
         for (var j=0; j<9; j++) {
-          if (sudoku.gameBoard[i][j] == selectedNumber && (i != r && j != c)) {
-            sudoku.gameBoard[i][j].className = "same-number-background";
+          if (this.gameBoard[i][j].num == this.gameBoard[r][c].num && i != r && j != c) {
             document.getElementById("r" + i + "c" + j).classList.add("same-number-background");
           }
         }
       }
     }
-  
-    // set selected cell color
-    sudoku.gameBoard[r][c].className = "selected-cell";
-    document.getElementById("r" + r + "c" + c).classList.add("selected-cell");
+  }
+
+  removeCellHighlight() {
+    let r = this.selectedCell[0];
+    let c = this.selectedCell[1];
+
+    if (r != -1 && c != -1) {
+      let rowStart = super.getHighlightStart(r);
+      let colStart = super.getHighlightStart(c);
+
+      this.gameBoard[r][c].isSelected = false;
+      document.getElementById("r" + r + "c" + c).classList.remove("selected-cell");
+
+      // reset row and col background color
+      for (var i=0; i<9; i++) {
+        document.getElementById("r" + r + "c" + i).classList.remove("selected-background");
+        document.getElementById("r" + i + "c" + c).classList.remove("selected-background");
+      }
+    
+      // reset 3x3 sub grid background color
+      for (var i=rowStart; i<rowStart+3; i++) {
+        for (var j=colStart; j<colStart+3; j++) {
+          document.getElementById("r" + i + "c" + j).classList.remove("selected-background");
+        }
+      }
+
+      this.setSameNumberHighlight(r,c);
+    }
+  }
+
+  setSameNumberHighlight(r,c) {
+    if (this.gameBoard[r][c].num != 0) {
+      for (var i=0; i<9; i++) {
+        for (var j=0; j<9; j++) {
+          if (this.gameBoard[i][j].num == this.gameBoard[r][c].num && i != r && j != c) {
+            document.getElementById("r" + i + "c" + j).classList.remove("same-number-background");
+          }
+        }
+      }
+    }
   }
 
   playNumber(num) {
-    let r = game.selectedCell[0];
-    let c = game.selectedCell[1];
+    let r = this.selectedCell[0];
+    let c = this.selectedCell[1];
   
-    if (!sudoku.gameBoard[r][c].isOpen) {
-      let rowStart = helper.getHighlightStart(r);
-      let colStart = helper.getHighlightStart(c);
+    if (!this.gameBoard[r][c].isOpen) {
+      let rowStart = super.getHighlightStart(r);
+      let colStart = super.getHighlightStart(c);
   
-      sudoku.gameBoard[r][c].num = num;
-      document.getElementById("r" + r + "c" + c).innerHTML = num;
-  
+      // remove previous number first
+      this.removeNumber();
+
+      // Check if the number exists in the selected row and col
       for (var i=0; i<9; i++) {
-        if (sudoku.gameBoard[r][i].num == num) {
-          sudoku.gameBoard[r][i].className = "warning";
-      
-          document.getElementById("r" + r + "c" + i).classList.remove("selected-background");
+        if (this.gameBoard[r][i].num == num) {
           document.getElementById("r" + r + "c" + i).classList.add("warning");
         }
   
-        if (sudoku.gameBoard[i][c].num == num) {
-          sudoku.gameBoard[i][c].className = "warning";
-  
-          document.getElementById("r" + i + "c" + c).classList.remove("selected-background");
+        if (this.gameBoard[i][c].num == num) {
           document.getElementById("r" + i + "c" + c).classList.add("warning");
         }
       }
   
       for (var i=rowStart; i<rowStart+3; i++) {
         for (var j=colStart; j<colStart+3; j++) {
-          sudoku.gameBoard[i][j].className = "warning";
-          document.getElementById("r" + i + "c" + j).classList.add("warning");
+          if (this.gameBoard[i][j].num == num) {
+            document.getElementById("r" + i + "c" + j).classList.add("warning");
+          }
         }
       }
+
+      // Write the number in the selected cell
+      this.gameBoard[r][c].num = num;
+      document.getElementById("r" + r + "c" + c).innerHTML = num;
+
+      this.setSameNumberHighlight(r,c);
     }
   }
 
-  render() {
-    let game = sudoku.gameBoard;
+  removeNumber() {
+    let r = this.selectedCell[0];
+    let c = this.selectedCell[1];
+    let num = this.gameBoard[r][c].num;
+
+    let rowStart = super.getHighlightStart(r);
+    let colStart = super.getHighlightStart(c);
   
-    for (let i=0; i<9; i++) {
-      for (let j=0; j<9; j++) {
-        document.getElementById("r" + i + "c" + j).innerHTML = game[i][j].num;
-        document.getElementById("r" + i + "c" + j).classList.add(game[i][j].classList);
+    if (!this.gameBoard[r][c].isOpen) {
+      for (var i=0; i<9; i++) {
+        if (this.gameBoard[r][i].num == num)
+          document.getElementById("r" + r + "c" + i).classList.remove("warning");
+
+        if (this.gameBoard[i][c].num == num)
+          document.getElementById("r" + i + "c" + c).classList.remove("warning");
       }
+
+      for (var i=rowStart; i<rowStart+3; i++) {
+        for (var j=colStart; j<colStart+3; j++) {
+          if (this.gameBoard[i][j].num == num) {
+            document.getElementById("r" + i + "c" + j).classList.remove("warning");
+          }
+        }
+      }
+
+      // remove all other highlights
+      this.removeCellHighlight();
+
+      // remove number from current cell
+      this.gameBoard[r][c].num = 0;
+      document.getElementById("r" + r + "c" + c).innerHTML = "";
     }
   }
 }

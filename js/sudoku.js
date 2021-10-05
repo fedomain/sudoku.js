@@ -3,19 +3,17 @@ class Sudoku extends Helpers {
     super();
 
     // PROPERTIES
-    this.answerBoard = [];
+    this.answerGrid = [];
     this.game = Object.create(null);
   }
 
   // METHODS
   startGame() {
-    this.setupAnswerBoard();
-    this.game = new Game(this.answerBoard);
-    
-    this.game.setupGame();
+    this.answerGrid = this.setupAnswerGrid();
+    this.game = new Game(this.answerGrid);
   }
 
-  setupAnswerBoard() {
+  setupAnswerGrid() {
     let grid = [];
 
     grid[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -31,7 +29,7 @@ class Sudoku extends Helpers {
     grid = this.setFirstNine(grid);
     grid = this.solveGrid(grid);
 
-    this.answerBoard = grid;
+    return grid;
   }
 
   checkGrid(grid) {
@@ -48,7 +46,7 @@ class Sudoku extends Helpers {
 
     for (let i=0; i<9; i++) {
       for (let j=0; j<9; j++)
-        result += this.answerBoard[i][j] + ",";
+        result += this.answerGrid[i][j] + ",";
 
       result += "\n";
     }
@@ -153,5 +151,25 @@ class Sudoku extends Helpers {
     }
   
     grid[row][col] = 0;
+  }
+
+  cellSelect(row, col) {
+    if (Object.getOwnPropertyNames(this.game).length === 0) {
+      alert("Please start the game first.");
+    } else {
+      this.game.removeCellHighlight();
+      this.game.selectedCell = [row,col];
+      this.game.setCellHighlight();
+    }
+  }
+
+  playNumber(num) {
+    if (Object.getOwnPropertyNames(this.game).length === 0) {
+      alert("Please start the game first.");
+    } else if (this.game.selectedCell[0] == -1 && this.game.selectedCell[1] == -1) {
+      alert("Please select a cell on the game board first.");
+    } else {
+      this.game.playNumber(num);
+    }
   }
 }
