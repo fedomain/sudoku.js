@@ -157,9 +157,7 @@ class Sudoku extends Helpers {
     if (Object.getOwnPropertyNames(this.game).length === 0) {
       alert("Please start the game first.");
     } else {
-      this.game.removeCellHighlight();
-      this.game.selectedCell = [row,col];
-      this.game.setCellHighlight();
+      this.game.cellSelect(row,col);
     }
   }
 

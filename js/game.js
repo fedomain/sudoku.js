@@ -54,6 +54,12 @@ class Game extends Helpers {
     }
   }
 
+  cellSelect(row, col) {
+    this.removeCellHighlight();
+    this.selectedCell = [row,col];
+    this.setCellHighlight();
+  }
+
   setCellHighlight() {
     let r = this.selectedCell[0];
     let c = this.selectedCell[1];
