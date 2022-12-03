@@ -1,4 +1,6 @@
-# Welcome to my Sudoku JS app
+# Welcome to my Sudoku web app
+
+This is a basic Javscript version of the popular board game Sudoku. The rules and regulations are the same and it is accessible via any modern browsers.
 
 Game rules
 
@@ -6,50 +8,24 @@ Game rules
 - Number 1-9 appearing only once for each column; And
 - Number 1-9 appearing only once for each 3x3 sub-grid (box)
 
-Game setup
-
-- game variation (default: standard)
-- game difficulty (default: very easy)
-
-Game Components
-
-- Setting up the game
-	- Will need to store all the possible game boards in a permanent storage like database or file.
-	- The basic number of numbers to display depends on the difficulty level. Might also require some other rules.
-- Playing the game
-	- A JS object for the game, this is a singleton.
-	- A JS object for each cell containing all the information regarding the cell. Like current value, the answer, default display flag, etc.
-
 Technology Used
 
-- Javascript
+- Javascript (ES6)
 - Plain HTML5
 - CSS3
 
 Phase 1
 
-- Setup a standard 9x9 game
-- Include 3 different difficulty levels (easy, moderate, high)
-- Cell highlighting including completion highlighting for row, column and sub-grid
-- Illegal move indicator
-- Timer
-- Pause (resume game)
-- Write this in plain JS (maybe jQuery)
+- Size of the board is restricted to 9x9
+- Difficulty level is restricted to easy (which means we remove 39 numbers only)
+- Play game
 
 Phase 2
 
-- Hints
-- More game variations
-- More game difficulties
-- Tutorials
-- Custom puzzles
-- Change the front end to use AngularJS or React
+- Instantly check if the number entered is correct (with visual clues)
+- Add an undo or erase button
+- 
 
-Known bugs
+Known Bugs
 
-- Selecting another number from the pad should not remove any previous errors [fixed]
-- Red background should be applied to both cells that are part of the illegal move
-- Error message that asks the user to select a number first should be removed automatically when they select a number from the pad [Fixed]
-- When a user un-select an illegal number from the game board, the error messages and illegal indicator should also be removed [Fixed]
-- Clicking on a cell while no number is selected will display a 0 [Fixed]
-- Clicking on a permanent display number will make it disappear [Fixed]
+- Able to replace the default numbers (that are correct) with a user specified number

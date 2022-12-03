@@ -1,101 +1,102 @@
 html, body {
-	padding: 10px;
+	padding: 0;
 	margin: 0;
 	font: 20px arial, sans-serif;
 }
 
-div#header {margin: auto;}
-div#game-wrapper {width: 70%;}
+div#wrapper {
+  min-width: 70%;
+  min-height: 70%;
+}
 
-div#game-header-wrapper {width: 100%; padding: 5px;}
-div#game-board-wrapper {float: left; width: 50%;}
-div#game-pad-wrapper {float: right; width: 50%; height: 170px;}
-div#game-error-wrapper {float: left; width: 100%;}
+/* Game Board */
+div#game-board-wrapper {
+  width: 490px;
+  height: 490px;
+  float: left;
+  margin: 10px;
+}
 
-
-table.game-board {
+table#game-board {
 	margin: auto;
 	border-collapse: collapse;
 	border: 2px solid black;
 }
 
-table.game-board td {
+table#game-board td {
 	width: 30px;
 	height: 30px;
 	padding: 10px;
-	font-size: 30px;
+	font-size: 24px;
 	text-align: center;
-}
-
-table.game-board td.highlighted {
-	background-color: #EEEEEE;
-}
-
-table.game-board td.row-last {
-	border-bottom: 1px solid black;
-}
-
-table.game-board td.hard-top {
-	border-top: 2px solid black;
-}
-
-table.game-board td.col-last {
-	border-right: 1px solid black;
-}
-
-table.game-board td.hard-left {
-	border-left: 2px solid black;
-}
-
-table.game-board td.normal {
-	border-right: 1px solid black;
-	border-bottom: 1px solid black;
-}
-
-table.game-board td.hand {
 	cursor: pointer;
+	/*color: #005fee;*/
+	color: #000000;
+	background-color: #ffffff;
 }
 
-table.game-board td.selectedNumber {
-	background-color: yellow;
+table#game-board td.normal {
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
 }
 
-table.game-board td.errorCell {
-	background-color: #F00;
-}
+table#game-board td.normal:hover {background-color: #bcd6fe;}
 
-table.game-board td.bold {
-	font-weight: bold;
-}
+table#game-board td.open-position {color: #005fee;}
+table#game-board td.heavy-border-right {border-right: 2px solid black;}
+table#game-board td.heavy-border-bottom {border-bottom: 2px solid black;}
 
-table.game-board td.lighter {
-	font-weight: lighter;
+/* Cell background & Cell number colour */
+table#game-board td.selected-cell {background-color: #bcd6fe;}
+table#game-board td.selected-background {background-color: #eeeeee;}
+table#game-board td.same-number-background {background-color: #9fa5fc;}
+table#game-board td.warning {background-color: #fda1a1;}
+
+
+/* Game Pad */
+div#game-pad-wrapper {
+  width: 300px;
+  height: 300px;
+  float: left;
+  margin: 10px;
 }
 
 table#game-pad {
+	margin: auto;
 	border-collapse: collapse;
-	border: 1px solid black;
 }
 
 table#game-pad td {
-	width: 60px;
-	height: 40px;
+	width: 100px;
+	height: 100px;
+	font-size: 40px;
 	text-align: center;
-	background-color: grey;
+  color: #005fee;
+  background-color: #eeeeee;
+  border: 5px solid #ffffff;
+  cursor: pointer;
 }
 
-table#game-pad button {
-	width: 60px;
-	height: 40px;
-	font-size: 25px;
+table#game-pad td:hover {background-color: #a3adcf;}
+
+
+
+/* Buttons */
+button#btn_new_game {
+	display: block;
+	background-color: #3d49f8;
+	border-radius: 10px;
+	border: 4px double #cccccc;
+	color: #eeeeee;
+	text-align: center;
+	font-size: 28px;
+	padding: 20px;
+	width: 300px;
+	transition: all 0.5s;
 	cursor: pointer;
+	margin: 0 0 20px 0;
 }
 
-div#game-error-wrapper ul {
-	list-style: none;
-	font-size: 15px;
+button#btn_new_game:hover {
+	background-color: #636dfd;
 }
-
-/* generic classes */
-.hide {display: none;}
-.show {display: block;}
