@@ -1,217 +1,229 @@
-class Game extends Helpers {
-  constructor(answerGrid) {
-    super();
+class Game{
+  constructor(boardLength, difficultyLevel) {
+    this.gridLength = boardLength;
+    this.removeNumberCount = this.setDifficulty(difficultyLevel);
 
-    // PROPERTIES
-    this.selectedCell = [-1,-1];
-    this.answerGrid = answerGrid;
-    this.gameBoard = this.setupGame(answerGrid);
+    this.SRN = Math.sqrt(this.gridLength);
+    this.testGrid = this.setupGrid();
+    this.baseGrid = this.setupGrid();
 
-    // Run these to clear the board
-    this.resetGameBoard();
-    this.setupGameBoard();
+    this.startGame();
   }
 
-  // METHODS
-  setupGame(answerGrid) {
-    let game = [];
-    let count = 1;
-    let openPositions = super.getNumberOfRandoms(30,1,81);
-  
-    for (var i=0; i<9; i++) {
-      game[i] = [];
-      for (var j=0; j<9; j++) {
-        game[i][j] = new Cell(i,j,0,[]);
-
-        if (openPositions.includes(count)) {
-          game[i][j].isOpen = true;
-          game[i][j].num = answerGrid[i][j];
-          game[i][j].addClass("open-position");
-        }
-        count++;
+  clearGrid = () => {
+    for (let i=0; i<this.gridLength; i++) {
+      for (let j=0; j<this.gridLength; j++) {
+        document.getElementById('r' + i + 'c' + j).innerHTML = "";
       }
     }
+  }
+
+  setDifficulty = (level) => {
+    let removeNumber = 0;
     
-    return game;
+    switch(level) {
+      case 0: removeNumber = 39; break; // Easy
+      case 1: removeNumber = 46; break; // Medium
+      case 2: removeNumber = 53; break; // Hard
+      case 3: removeNumber = 55; break; // Expert
+    }
+
+    return removeNumber;
   }
 
-  setupGameBoard() {
-    for (var i=0; i<9; i++) {
-      for (var j=0; j<9; j++) {
-        if (this.gameBoard[i][j].num != 0) {
-          document.getElementById("r" + i + "c" + j).innerHTML = this.gameBoard[i][j].num;
-          document.getElementById("r" + i + "c" + j).classList.add(this.gameBoard[i][j].getClassList());
+  setupGrid = () => {
+    let grid = new Array(this.gridLength);
+
+    for (let i=0; i<this.gridLength; i++) {
+      grid[i] = new Array(this.gridLength);
+      for (let j=0; j<this.gridLength; j++) {
+        grid[i][j] = 0;
+      }
+    }
+
+    return grid;
+  }
+
+  startGame = () => {
+    this.clearGrid();
+    this.fillDiagonal();
+    this.fillRemaining(0, this.SRN);
+
+    // make a copy of the grid for final checking
+    this.duplicateGrid();
+
+    this.removeDigits();
+
+    this.printGame();
+  }
+
+  duplicateGrid = () => {
+    for (let i=0; i<this.gridLength; i++) {
+      for (let j=0; j<this.gridLength; j++) {
+        this.baseGrid[i][j] = this.testGrid[i][j];
+      }
+    }
+  }
+
+  fillDiagonal = () => {
+    for (let i=0; i<this.gridLength; i+=this.SRN) {
+      this.fillBox(i, i);
+    }
+  }
+
+  fillBox = (row, col) => {
+    let num;
+
+    for (let i=0; i<this.SRN; i++) {
+      for (let j=0; j<this.SRN; j++) {
+        do {
+          num = this.randomGenerator(this.gridLength);
+        } while (!this.unUsedInBox(row, col, num));
+
+        this.testGrid[row+i][col+j] = num;
+        //console.log('row: ' + row+i + ' col: ' + col+j);
+      }
+    }
+  }
+
+  randomGenerator = (num) => parseInt(Math.floor(Math.random() * num + 1));
+
+  fillRemaining = (row, col) => {
+    //console.log(row + " " + col);
+
+    // If we are at the end of the row then jump to the next row
+    if (col >= this.gridLength && row < this.gridLength-1) {
+      row = row + 1;
+      col = 0;
+    }
+
+    // If we are over the grid then return true
+    if (row >= this.gridLength && col >= this.gridLength) {
+      return true;
+    }
+
+    if (row < this.SRN) {
+      if (col < this.SRN) {
+        col = this.SRN; // If both row and col is less than the square root of the grid length then set col to the square root
+      }
+    } else if (row < this.gridLength - this.SRN) {
+      if (col == parseInt(row/this.SRN) * this.SRN) {
+        col = col + this.SRN;
+      }
+    } else {
+      if (col == this.gridLength - this.SRN) {
+        row = row + 1;
+        col = 0;
+
+        if (row >= this.gridLength) {
+          return true;
         }
       }
     }
-  }
 
-  resetGameBoard() {
-    for (var i=0; i<9; i++) {
-      for (var j=0; j<9; j++) {
-        document.getElementById("r" + i + "c" + j).innerHTML = "";
+    for (let num=1; num <= this.gridLength; num++) {
+      if (this.isSafe(row, col, num)) {
+        this.testGrid[row][col] = num;
+
+        if (this.fillRemaining(row, col+1)) {
+          return true;
+        }
+
+        this.testGrid[row][col] = 0;
+        //console.log(row + " " + col + " " + num);
       }
     }
+
+    return false;
   }
 
-  cellSelect(row, col) {
-    this.removeCellHighlight();
-    this.selectedCell = [row,col];
-    this.setCellHighlight();
-  }
+  isSafe = (row, col, num) => (this.unUsedInRow(row, num) && this.unUsedInCol(col, num) && this.unUsedInBox(row - row % this.SRN, col - col % this.SRN, num));
 
-  setCellHighlight() {
-    let r = this.selectedCell[0];
-    let c = this.selectedCell[1];
-
-    let rowStart = super.getHighlightStart(r);
-    let colStart = super.getHighlightStart(c);
-
-    // set selected cell color
-    this.gameBoard[r][c].isSelected = true;
-    document.getElementById("r" + r + "c" + c).classList.add("selected-cell");
-
-    // set row and col background color
-    for (var i=0; i<9; i++) {
-      if (!this.gameBoard[r][i].isSelected) {
-        document.getElementById("r" + r + "c" + i).classList.add("selected-background");
-      }
-      
-      if (!this.gameBoard[i][c].isSelected) {
-        document.getElementById("r" + i + "c" + c).classList.add("selected-background");
+  unUsedInRow = (row, num) => {
+    for (let col=0; col<this.gridLength; col++) {
+      if (this.testGrid[row][col] == num) {
+        return false;
       }
     }
   
-    // set 3x3 sub grid background color
-    for (var i=rowStart; i<rowStart+3; i++) {
-      for (var j=colStart; j<colStart+3; j++) {
-        if (!this.gameBoard[i][j].isSelected) {
-          document.getElementById("r" + i + "c" + j).classList.add("selected-background");
+    return true;
+  }
+
+  unUsedInCol = (col, num) => {
+    for (let row=0; row<this.gridLength; row++) {
+      if (this.testGrid[row][col] == num) {
+        return false;
+      }
+    }
+  
+    return true;
+  }
+
+  unUsedInBox = (rowStart, colStart, num) => {
+    for (let i=0; i<this.SRN; i++) {
+      for (let j=0; j<this.SRN; j++) {
+        if (this.testGrid[rowStart+i][colStart+j] == num) {
+          return false;
         }
       }
     }
   
-    // set all cell with the same number a new background color
-    if (this.gameBoard[r][c].num != 0) {
-      for (var i=0; i<9; i++) {
-        for (var j=0; j<9; j++) {
-          if (this.gameBoard[i][j].num == this.gameBoard[r][c].num && i != r && j != c) {
-            document.getElementById("r" + i + "c" + j).classList.add("same-number-background");
-          }
-        }
+    return true;
+  }
+
+  removeDigits = () => {
+    let row = 0;
+    let col = 0;
+    let count = this.removeNumberCount;
+    let cellId = 0;
+
+    while (count != 0) {
+      cellId = this.randomGenerator(this.gridLength * this.gridLength) - 1;
+      row = parseInt(cellId / this.gridLength);
+      col = cellId % this.gridLength;
+
+      if (col != 0) {
+        col = col - 1;
+      }
+
+      if (this.testGrid[row][col] != 0) {
+        count--;
+        this.testGrid[row][col] = 0;
       }
     }
   }
 
-  removeCellHighlight() {
-    let r = this.selectedCell[0];
-    let c = this.selectedCell[1];
-
-    if (r != -1 && c != -1) {
-      let rowStart = super.getHighlightStart(r);
-      let colStart = super.getHighlightStart(c);
-
-      this.gameBoard[r][c].isSelected = false;
-      document.getElementById("r" + r + "c" + c).classList.remove("selected-cell");
-
-      // reset row and col background color
-      for (var i=0; i<9; i++) {
-        document.getElementById("r" + r + "c" + i).classList.remove("selected-background");
-        document.getElementById("r" + i + "c" + c).classList.remove("selected-background");
-      }
-    
-      // reset 3x3 sub grid background color
-      for (var i=rowStart; i<rowStart+3; i++) {
-        for (var j=colStart; j<colStart+3; j++) {
-          document.getElementById("r" + i + "c" + j).classList.remove("selected-background");
-        }
-      }
-
-      this.setSameNumberHighlight(r,c);
-    }
-  }
-
-  setSameNumberHighlight(r,c) {
-    if (this.gameBoard[r][c].num != 0) {
-      for (var i=0; i<9; i++) {
-        for (var j=0; j<9; j++) {
-          if (this.gameBoard[i][j].num == this.gameBoard[r][c].num && i != r && j != c) {
-            document.getElementById("r" + i + "c" + j).classList.remove("same-number-background");
-          }
-        }
+  printGame = () => {
+    for (let i=0; i<this.gridLength; i++) {
+      for (let j=0; j<this.gridLength; j++) {
+        if (this.testGrid[i][j] != 0)
+          document.getElementById('r' + i + 'c' + j).innerHTML = this.testGrid[i][j];
       }
     }
   }
 
-  playNumber(num) {
-    let r = this.selectedCell[0];
-    let c = this.selectedCell[1];
-  
-    if (!this.gameBoard[r][c].isOpen) {
-      let rowStart = super.getHighlightStart(r);
-      let colStart = super.getHighlightStart(c);
-  
-      // remove previous number first
-      this.removeNumber();
+  playNumber = (row, col, num) => {
+      document.getElementById("r" + row + "c" + col).classList.add("open-position");
+      document.getElementById("r" + row + "c" + col).innerHTML = num;
+      this.testGrid[row][col] = num;
 
-      // Check if the number exists in the selected row and col
-      for (var i=0; i<9; i++) {
-        if (this.gameBoard[r][i].num == num) {
-          document.getElementById("r" + r + "c" + i).classList.add("warning");
-        }
-  
-        if (this.gameBoard[i][c].num == num) {
-          document.getElementById("r" + i + "c" + c).classList.add("warning");
-        }
-      }
-  
-      for (var i=rowStart; i<rowStart+3; i++) {
-        for (var j=colStart; j<colStart+3; j++) {
-          if (this.gameBoard[i][j].num == num) {
-            document.getElementById("r" + i + "c" + j).classList.add("warning");
-          }
-        }
-      }
-
-      // Write the number in the selected cell
-      this.gameBoard[r][c].num = num;
-      document.getElementById("r" + r + "c" + c).innerHTML = num;
-
-      this.setSameNumberHighlight(r,c);
-    }
+      if (this.isGameSolved())
+        alert("You have finished the game.");
   }
 
-  removeNumber() {
-    let r = this.selectedCell[0];
-    let c = this.selectedCell[1];
-    let num = this.gameBoard[r][c].num;
+  isGameSolved = () => {
+    let solved = true;
 
-    let rowStart = super.getHighlightStart(r);
-    let colStart = super.getHighlightStart(c);
-  
-    if (!this.gameBoard[r][c].isOpen) {
-      for (var i=0; i<9; i++) {
-        if (this.gameBoard[r][i].num == num)
-          document.getElementById("r" + r + "c" + i).classList.remove("warning");
-
-        if (this.gameBoard[i][c].num == num)
-          document.getElementById("r" + i + "c" + c).classList.remove("warning");
-      }
-
-      for (var i=rowStart; i<rowStart+3; i++) {
-        for (var j=colStart; j<colStart+3; j++) {
-          if (this.gameBoard[i][j].num == num) {
-            document.getElementById("r" + i + "c" + j).classList.remove("warning");
-          }
+    upperloop:
+    for (let i=0; i<this.gridLength; i++) {
+      for (let j=0; j<this.gridLength; j++) {
+        if (this.baseGrid[i][j] != this.testGrid[i][j]) {
+          solved = false;
+          break upperloop;
         }
       }
-
-      // remove all other highlights
-      this.removeCellHighlight();
-
-      // remove number from current cell
-      this.gameBoard[r][c].num = 0;
-      document.getElementById("r" + r + "c" + c).innerHTML = "";
     }
+
+    return solved;
   }
 }
